@@ -23,12 +23,16 @@ public class inforDocController {
         String sql = "SELECT usuario,nombre,apellido,cedula FROM usuarios WHERE cedula ='" + cedula + "';";
         ArrayList<Object> datos = new ArrayList<>();
         datos = manejador.resultado(sql);
-        String[] info = {
-            datos.get(0).toString(),
-            datos.get(1).toString(),
-            datos.get(2).toString(),
-            datos.get(3).toString()};
-        return info;
+        if (datos.size() == 0) {
+            return null;
+        } else {
+            String[] info = {
+                datos.get(0).toString(),
+                datos.get(1).toString(),
+                datos.get(2).toString(),
+                datos.get(3).toString()};
+            return info;
+        }
     }
 
     public DefaultTableModel cargarTabla(String cedula) {

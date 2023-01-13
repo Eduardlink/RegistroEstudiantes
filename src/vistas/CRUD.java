@@ -30,7 +30,7 @@ public class CRUD extends javax.swing.JFrame {
      */
     public CRUD() {
         initComponents();
-        TestAsistencia();
+        //TestAsistencia();
     }
     
     public void TestAsistencia(){
@@ -74,6 +74,7 @@ public class CRUD extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -110,6 +111,8 @@ public class CRUD extends javax.swing.JFrame {
         jbtnCargarRegistros = new javax.swing.JButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         jButton1 = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -209,7 +212,7 @@ public class CRUD extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnAgregar)
                     .addComponent(jtxtSalir))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
@@ -295,6 +298,12 @@ public class CRUD extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup1.add(jCheckBox1);
+        jCheckBox1.setText("jCheckBox1");
+
+        buttonGroup1.add(jCheckBox2);
+        jCheckBox2.setText("jCheckBox2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -342,8 +351,13 @@ public class CRUD extends javax.swing.JFrame {
                                             .addComponent(jtxtOutMan)
                                             .addComponent(jtxtOutTar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addComponent(jButton1)))
+                                .addGap(71, 71, 71)
+                                .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(98, 98, 98)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCheckBox2)
+                                    .addComponent(jCheckBox1))))
                         .addGap(53, 53, 53))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jbtnCargarUsuarios)
@@ -398,9 +412,13 @@ public class CRUD extends javax.swing.JFrame {
                             .addComponent(jtxtOutTar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(29, 29, 29)
                         .addComponent(jbtnJornada)
-                        .addGap(74, 74, 74)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBox2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox1)
+                        .addGap(55, 55, 55))))
         );
 
         pack();
@@ -416,6 +434,7 @@ public class CRUD extends javax.swing.JFrame {
 
     private void jbtnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCargarActionPerformed
         //buscarDatos();
+        /*
         LoguinController controlador = new LoguinController();
         boolean[] verificado = controlador.verificar(jtxtUsuario.getText(), jtxtPassword.getText(), "0");
         if (verificado[0] == false) {
@@ -425,6 +444,7 @@ public class CRUD extends javax.swing.JFrame {
         } else if (verificado[0] == true && verificado[1] == true) {
             JOptionPane.showMessageDialog(null, "Exito");
         }
+        */
     }//GEN-LAST:event_jbtnCargarActionPerformed
 
     private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
@@ -500,8 +520,11 @@ public class CRUD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

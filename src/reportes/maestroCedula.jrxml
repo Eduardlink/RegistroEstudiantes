@@ -50,7 +50,7 @@ where usuarios."cedula" =$P{cedula}]]>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="51" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="65" y="13" width="424" height="35"/>
+				<reportElement x="65" y="13" width="424" height="35" forecolor="#EC4747"/>
 				<textElement textAlignment="Center">
 					<font size="26" isBold="true"/>
 				</textElement>
@@ -157,9 +157,9 @@ where usuarios."cedula" =$P{cedula}]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="124">
+		<band height="187">
 			<subreport>
-				<reportElement x="0" y="0" width="555" height="124"/>
+				<reportElement x="0" y="0" width="555" height="187"/>
 				<subreportParameter name="cedula">
 					<subreportParameterExpression><![CDATA[$P{cedula}]]></subreportParameterExpression>
 				</subreportParameter>

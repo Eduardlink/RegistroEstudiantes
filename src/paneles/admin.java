@@ -26,7 +26,7 @@ public class admin extends javax.swing.JPanel {
         initComponents();
         this.home = home;
     }
-
+/*
     public void iniciarSesion() {
         LoguinController controlador = new LoguinController();
         boolean[] verificado = controlador.verificar(jtxtuser.getText(), String.valueOf(jtxtpass.getPassword()), "1");
@@ -42,7 +42,7 @@ public class admin extends javax.swing.JPanel {
             this.home.setVisible(false);
         }
     }
-
+*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,7 +160,7 @@ public class admin extends javax.swing.JPanel {
         if (jtxtuser.getText().trim().isEmpty() || String.valueOf(jtxtpass.getPassword()).trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Espacios invalidos o incompletos");
         } else {
-            iniciarSesion();
+            //iniciarSesion();
         }
     }//GEN-LAST:event_jbtnRegistroActionPerformed
 

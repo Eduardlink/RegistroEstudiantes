@@ -1,6 +1,8 @@
 
-  Fecha      Entrada MatSalida matuEntrada VesSalida Vesp
-  2022-06-30 07:00      13:00      14:00      16:00
+     Fecha   Entrada MatSalida matuEntrada VesSalida Vesp
+  2022-06-30    07:00      13:00      14:00      16:00
+  2022-07-05    07:00      null       null       null
+  2022-07-12    null       null       14:10      null
 
 
 
@@ -37,7 +39,5 @@
 
 
 
-
-  03/07/22 3:14                            Page 1 of 1
 
 

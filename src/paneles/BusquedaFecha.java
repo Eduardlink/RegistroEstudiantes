@@ -10,7 +10,24 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import controladores.BusquedaFechaController;
 import java.awt.Font;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.JTableHeader;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import org.olap4j.mdx.parser.impl.DefaultMdxParser;
 
 /**
  *
@@ -24,7 +41,15 @@ public class BusquedaFecha extends javax.swing.JPanel {
     public BusquedaFecha() {
         initComponents();
         cargarTitulos();
+        jbtnReportes.setVisible(false);
+        if (jtblRegistros.getRowCount() != 0) {
+            jbtnReportes.setEnabled(true);
+        } else {
+            jbtnReportes.setEnabled(false);
+        }
     }
+    Connection con;
+    PreparedStatement pst;
 
     public void cargarTitulos() {
         String[] titulos = {
@@ -45,9 +70,17 @@ public class BusquedaFecha extends javax.swing.JPanel {
             DefaultTableModel modeloTabla = search.cargarTabla(fecha);
             if (modeloTabla == null) {
                 JOptionPane.showMessageDialog(null, "No existen registros de la fecha seleccionada");
+                jtblRegistros.setModel(new DefaultTableModel());
+                cargarTitulos();
             } else {
                 jtblRegistros.setModel(modeloTabla);
             }
+
+        }
+        if (jtblRegistros.getRowCount() != 0) {
+            jbtnReportes.setEnabled(true);
+        } else {
+            jbtnReportes.setEnabled(false);
         }
     }
 
@@ -75,6 +108,7 @@ public class BusquedaFecha extends javax.swing.JPanel {
         datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblRegistros = new javax.swing.JTable();
+        jbtnReportes = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         jLabel1.setText("Busqueda por Docente");
@@ -113,6 +147,14 @@ public class BusquedaFecha extends javax.swing.JPanel {
         jtblRegistros.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
         jScrollPane1.setViewportView(jtblRegistros);
 
+        jbtnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/generarReporte3.png"))); // NOI18N
+        jbtnReportes.setText("Generar Reporte");
+        jbtnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnReportesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpanBackgroundLayout = new javax.swing.GroupLayout(jpanBackground);
         jpanBackground.setLayout(jpanBackgroundLayout);
         jpanBackgroundLayout.setHorizontalGroup(
@@ -130,7 +172,9 @@ public class BusquedaFecha extends javax.swing.JPanel {
                         .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jbtnBuscar)
-                        .addGap(436, 436, 436))))
+                        .addGap(63, 63, 63)
+                        .addComponent(jbtnReportes)
+                        .addGap(280, 280, 280))))
             .addGroup(jpanBackgroundLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1205, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,11 +186,12 @@ public class BusquedaFecha extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpanBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jpanBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jpanBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jlNombre)
                         .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtnReportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 472, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -170,6 +215,37 @@ public class BusquedaFecha extends javax.swing.JPanel {
         jtblRegistros.setRowHeight(30);
     }//GEN-LAST:event_jbtnBuscarActionPerformed
 
+    private void jbtnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesActionPerformed
+        generarReportes();
+    }//GEN-LAST:event_jbtnReportesActionPerformed
+
+    private void generarReportes() {
+        try {
+
+            Class.forName("org.sqlite.JDBC");
+            //con = DriverManager.getConnection("jdbc:sqlite:\\D:\\Archivos_Programacion\\NetBeans\\ProyectoV9\\SistemaRegistros\\dataBase.db");
+            con = DriverManager.getConnection("jdbc:sqlite:dataBase.db");
+            HashMap a = new HashMap();
+            a.put("fecha", datePicker1.getDate().toString());
+            //JasperDesign jdesign = JRXmlLoader.load("D:\\Archivos_Programacion\\NetBeans\\ProyectoV9\\SistemaRegistros\\src\\reportes\\reporteFecha2.jrxml");
+
+            File f = new File("src\\reportes\\reporteFecha2.jrxml");
+            JasperDesign jdesign = JRXmlLoader.load(f);
+            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+            JasperPrint jprint = JasperFillManager.fillReport(jreport, a, con);
+
+            JasperViewer.viewReport(jprint);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InformeDocentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(InformeDocentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(InformeDocentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
@@ -177,6 +253,7 @@ public class BusquedaFecha extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnBuscar;
+    private javax.swing.JButton jbtnReportes;
     private javax.swing.JLabel jlNombre;
     private javax.swing.JPanel jpanBackground;
     private javax.swing.JTable jtblRegistros;
