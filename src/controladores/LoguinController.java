@@ -22,22 +22,28 @@ import modelos.DataManager;
 public class LoguinController {
 
     //[false,false]-> [0]usuario
-    public boolean[] verificar(String usuario, String clave, String root) {
-        boolean[] valido = {false, false};
+    public boolean[] verificar(String usuario, String clave) {
+        boolean[] valido = {false, false, false};
         DataManager manejador = new DataManager();
         String pass;
-        String sql = "SELECT cedula,clave FROM usuarios WHERE usuario = '" + usuario + "' AND root='" + root + "';";
+        String sql = "SELECT cedula,clave,root FROM usuarios WHERE usuario = '" + usuario + "';";
         ArrayList<Object> datos = new ArrayList<>();
         datos = manejador.resultado(sql);
         if (datos.size() < 1) {
             return valido;
         } else {
             try {
+                if (datos.get(2).toString().equals("1")) {
+                    valido[2] = true;
+                } else {
+                    valido[2] = false;
+                }
                 pass = new EncriptadorAES().desencriptar(datos.get(1).toString(), "SisTech");
                 //pass = new SecretPass().Desencriptar(datos.get(1).toString());
                 if (pass.equals(clave)) {
                     valido[0] = true;
                     valido[1] = true;
+
                     return valido;
                 } else {
                     valido[0] = true;
@@ -65,4 +71,5 @@ public class LoguinController {
             }
         }
     }
+
 }

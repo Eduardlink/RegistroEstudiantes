@@ -5,6 +5,7 @@
  */
 package paneles;
 
+import Conexion.conexion;
 import java.awt.Color;
 import java.awt.Image;
 import javax.swing.BorderFactory;
@@ -15,7 +16,28 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import controladores.inforDocController;
 import java.awt.Font;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+import javax.swing.plaf.RootPaneUI;
 import javax.swing.table.JTableHeader;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -37,7 +59,15 @@ public class InformeDocentes extends javax.swing.JPanel {
         cargarTitulosTabla();
 
         //
+        if(jtblDocentes.getRowCount() != 0){
+            jbtnReportes.setEnabled(true);
+        }else{
+            jbtnReportes.setEnabled(false);
+        }
+        jbtnReportes.setVisible(false);
     }
+    Connection con;
+    PreparedStatement pst;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,6 +95,7 @@ public class InformeDocentes extends javax.swing.JPanel {
         jlbNombre = new javax.swing.JLabel();
         imgUsuario = new javax.swing.JLabel();
         jlbUsuario = new javax.swing.JLabel();
+        jbtnReportes = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1250, 590));
 
@@ -81,6 +112,11 @@ public class InformeDocentes extends javax.swing.JPanel {
         jtxtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jtxtBuscarFocusLost(evt);
+            }
+        });
+        jtxtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtxtBuscarActionPerformed(evt);
             }
         });
 
@@ -146,6 +182,14 @@ public class InformeDocentes extends javax.swing.JPanel {
 
         jlbUsuario.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
 
+        jbtnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/generarReporte.png"))); // NOI18N
+        jbtnReportes.setText("Generar Reporte");
+        jbtnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnReportesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -177,7 +221,8 @@ public class InformeDocentes extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(120, 120, 120)
                         .addComponent(jlbNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jbtnReportes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
@@ -187,6 +232,9 @@ public class InformeDocentes extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(47, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(20, 20, 20)
@@ -221,9 +269,10 @@ public class InformeDocentes extends javax.swing.JPanel {
                                 .addComponent(jlbCedula))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(60, 60, 60)
-                                .addComponent(jlbNombre))))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(47, Short.MAX_VALUE))
+                                .addComponent(jlbNombre)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnReportes)
+                        .addGap(110, 110, 110))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -240,9 +289,9 @@ public class InformeDocentes extends javax.swing.JPanel {
 
     private void jtxtBuscarFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBuscarFocusLost
 
-        if (jtxtBuscar.getText().isEmpty()) {
+        if (jtxtBuscar.getText().equals("")) {
             jtxtBuscar.setBorder(BorderFactory.createLineBorder(Color.red));
-            JOptionPane.showMessageDialog(null, "Campo vacio");
+            //JOptionPane.showMessageDialog(null, "Campo vacio");
             validacionCedula = false;
         } else {
             jtxtBuscar.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -257,12 +306,55 @@ public class InformeDocentes extends javax.swing.JPanel {
     }//GEN-LAST:event_jtxtBuscarFocusLost
 
     private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
+        if(jtxtBuscar.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Ingrese algun numero de identificacion");
+        }else{
         jtblDocentes.setModel(new inforDocController().cargarTabla(jtxtBuscar.getText()));
         if (validacionCedula == true) {
             buscarDocentes2(jtxtBuscar.getText());
 
         }
+        }
+        if(jtblDocentes.getRowCount() != 0){
+            jbtnReportes.setEnabled(true);
+        }else{
+            jbtnReportes.setEnabled(false);
+        }
     }//GEN-LAST:event_jbtnBuscarActionPerformed
+
+    private void jbtnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesActionPerformed
+        this.generarReportes();
+    }//GEN-LAST:event_jbtnReportesActionPerformed
+
+    private void jtxtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtBuscarActionPerformed
+
+    private void generarReportes() {
+        try {
+
+            Class.forName("org.sqlite.JDBC");
+            //con = DriverManager.getConnection("jdbc:sqlite:\\D:\\Archivos_Programacion\\NetBeans\\ProyectoV9\\SistemaRegistros\\dataBase.db");
+            con = DriverManager.getConnection("jdbc:sqlite:dataBase.db");
+            HashMap a = new HashMap();
+            a.put("cedula", jtxtBuscar.getText());
+            //JasperDesign jdesign = JRXmlLoader.load("D:\\Archivos_Programacion\\NetBeans\\ProyectoV9\\SistemaRegistros\\src\\reportes\\maestroCedula.jrxml");
+            File f = new File("src\\reportes\\detalleRegistros.jrxml");
+            JasperDesign jdesign = JRXmlLoader.load(f);
+            JasperReport jreport = JasperCompileManager.compileReport(jdesign);
+            JasperPrint jprint = JasperFillManager.fillReport(jreport, a, con);
+
+            JasperViewer.viewReport(jprint);
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InformeDocentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(InformeDocentes.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (JRException ex) {
+            Logger.getLogger(InformeDocentes.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     private boolean validarCedula(String cedula) {
         boolean cedulaCorrecta = false;
@@ -319,15 +411,18 @@ public class InformeDocentes extends javax.swing.JPanel {
 
     private void buscarDocentes2(String cedula) {
         inforDocController informe = new inforDocController();
-        if(informe.mostrarDatos(cedula)== null){
+        if (informe.mostrarDatos(cedula) == null) {
             JOptionPane.showMessageDialog(null, "Usuario no encontrado");
             return;
         }
         String[] datos = informe.mostrarDatos(cedula);
-        
-        if (datos[0].isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
 
+        if (datos[0].isEmpty()) {
+            jlbUsuario.setText(" ");
+            jlbCedula.setText(" ");
+            jlbNombre.setText(" ");
+            JOptionPane.showMessageDialog(null, "Usuario no encontrado");
+            
         } else {
             jlbUsuario.setText(datos[0]);
             jlbCedula.setText(datos[3]);
@@ -422,6 +517,7 @@ public class InformeDocentes extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnBuscar;
+    private javax.swing.JButton jbtnReportes;
     private javax.swing.JLabel jlbAsistencias;
     private javax.swing.JLabel jlbCedula;
     private javax.swing.JLabel jlbInasistencias;
@@ -430,4 +526,45 @@ public class InformeDocentes extends javax.swing.JPanel {
     private javax.swing.JTable jtblDocentes;
     private javax.swing.JTextField jtxtBuscar;
     // End of variables declaration//GEN-END:variables
+
+    /*try{
+            conexion cn = new conexion();
+           JasperReport jr = (JasperReport)JRLoader.loadObject(InformeDocentes.class.getResource("/reportes/maestroCedula.jasper"));
+           Map parametros=new HashMap<String, Object>();
+           parametros.put("cedula", jtxtBuscar.getText());       
+           JasperPrint jp = JasperFillManager.fillReport(jr, parametros,cn.conectar());
+           JasperViewer jv = new JasperViewer(jp);
+           jv.show();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }*/
+ /*conexion cn = new conexion();
+        String path ="D:\\Archivos_Programacion\\NetBeans\\ProyectoV9\\SistemaRegistros\\src\\reportes\\maestroCedula.jrxml";
+        JasperReport jr = null;
+        jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                JRJasperFillManager.fillReport(jr, null, cn.conectar())*/
+
+ /*try {
+            conexion cn = new conexion();
+            Map parametros = new HashMap();
+            parametros.put("cedula", jtxtBuscar.getText());
+            String path = "D:\\Archivos_Programacion\\NetBeans\\ProyectoV9\\SistemaRegistros\\src\\reportes\\maestroCedula.jrxml";
+            JasperReport reporte = JasperCompileManager.compileReport(path);
+            JasperPrint print = JasperFillManager.fillReport(reporte, parametros, cn.conectar());
+            JasperViewer.viewReport(print, false);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }*/
+ /*conexion cn = new conexion();
+        String path = "D:\\Archivos_Programacion\\NetBeans\\ProyectoV9\\SistemaRegistros\\src\\reportes\\report1.jrxml";
+        try {
+            JasperReport reporte;
+            reporte = (JasperReport) JRLoader.loadObjectFromLocation(path);
+            JasperPrint jasperPrint;
+            jasperPrint = JasperFillManager.fillReport(path, null, cn.conectar());
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            viewer.setVisible(true);
+        } catch (Exception e) {
+        }*/
 }

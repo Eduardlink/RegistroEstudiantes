@@ -5,25 +5,312 @@
  */
 package paneles;
 
+import com.digitalpersona.onetouch.DPFPDataPurpose;
+import com.digitalpersona.onetouch.DPFPFeatureSet;
+import com.digitalpersona.onetouch.DPFPGlobal;
+import com.digitalpersona.onetouch.DPFPSample;
+import com.digitalpersona.onetouch.DPFPTemplate;
+import com.digitalpersona.onetouch.capture.DPFPCapture;
+import com.digitalpersona.onetouch.capture.event.DPFPDataAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPDataEvent;
+import com.digitalpersona.onetouch.capture.event.DPFPErrorAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPErrorEvent;
+import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPReaderStatusEvent;
+import com.digitalpersona.onetouch.capture.event.DPFPSensorAdapter;
+import com.digitalpersona.onetouch.capture.event.DPFPSensorEvent;
+import com.digitalpersona.onetouch.processing.DPFPEnrollment;
+import com.digitalpersona.onetouch.processing.DPFPFeatureExtraction;
+import com.digitalpersona.onetouch.processing.DPFPImageQualityException;
+import com.digitalpersona.onetouch.verification.DPFPVerification;
+import com.digitalpersona.onetouch.verification.DPFPVerificationResult;
 import controladores.LoguinController;
 import interfazGrafica.InicioPrincipal;
+import interfazGrafica.paginaPrincipal_Admin;
 import interfazGrafica.paginaPrincipal_Usuario;
 import java.awt.Color;
+import java.awt.Image;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import modelos.DataManager;
 
 /**
  *
  * @author spc
  */
 public class docente extends javax.swing.JPanel {
+
+    InicioPrincipal home;
     private InicioPrincipal loguin;
+
+    //Varible que permite iniciar el dispositivo de lector de huella conectado
+// con sus distintos metodos.
+    private DPFPCapture Lector = DPFPGlobal.getCaptureFactory().createCapture();
+
+//Varible que permite establecer las capturas de la huellas, para determina sus caracteristicas
+// y poder estimar la creacion de un template de la huella para luego poder guardarla
+    private DPFPEnrollment Reclutador = DPFPGlobal.getEnrollmentFactory().createEnrollment();
+
+//Esta variable tambien captura una huella del lector y crea sus caracteristcas para auntetificarla
+// o verificarla con alguna guardada en la BD
+    private DPFPVerification Verificador = DPFPGlobal.getVerificationFactory().createVerification();
+
+//Variable que para crear el template de la huella luego de que se hallan creado las caracteriticas
+// necesarias de la huella si no ha ocurrido ningun problema
+    private DPFPTemplate template;
+    public static String TEMPLATE_PROPERTY = "template";
+
     /**
      * Creates new form docente
      */
     public docente(InicioPrincipal loguin) {
         initComponents();
-        this.loguin =loguin;
+        this.loguin = loguin;
+        jlblHuella.setIcon(new ImageIcon(getClass().getResource("/imagenesFrames/huellaNegro.png")));
+        //jtxtaStatus.setEditable(false);
+        Iniciar();
+        start();
+        EstadoHuellas();
+    }
+
+    protected void Iniciar() {
+        Lector.addDataListener(new DPFPDataAdapter() {
+            @Override
+            public void dataAcquired(final DPFPDataEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            EnviarTexto("La Huella Digital ha sido Capturada");
+                            ProcesarCaptura(e.getSample());
+                        } catch (IOException ex) {
+                            Logger.getLogger(docente.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+            }
+        });
+
+        Lector.addReaderStatusListener(new DPFPReaderStatusAdapter() {
+            @Override
+            public void readerConnected(final DPFPReaderStatusEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("El Sensor de Huella Digital esta Activado o Conectado");
+                    }
+                });
+            }
+
+            @Override
+            public void readerDisconnected(final DPFPReaderStatusEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("El Sensor de Huella Digital esta Desactivado o no Conectado");
+                    }
+                });
+            }
+        });
+
+        Lector.addSensorListener(new DPFPSensorAdapter() {
+            @Override
+            public void fingerTouched(final DPFPSensorEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("El dedo ha sido colocado sobre el Lector de Huella");
+                        jlblHuella.setIcon(new ImageIcon(getClass().getResource("/imagenesFrames/huellaAzul.png")));
+                        repaint();
+                    }
+                });
+            }
+
+            @Override
+            public void fingerGone(final DPFPSensorEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("El dedo ha sido quitado del Lector de Huella");
+                        jlblHuella.setIcon(new ImageIcon(getClass().getResource("/imagenesFrames/huellaNegro.png")));
+                        repaint();
+                    }
+                });
+            }
+        });
+
+        Lector.addErrorListener(new DPFPErrorAdapter() {
+            public void errorReader(final DPFPErrorEvent e) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    public void run() {
+                        EnviarTexto("Error: " + e.getError());
+                    }
+                });
+            }
+        });
+    }
+
+    public DPFPFeatureSet featuresinscripcion;
+    public DPFPFeatureSet featuresverificacion;
+
+    public void ProcesarCaptura(DPFPSample sample) throws IOException {
+        // Procesar la muestra de la huella y crear un conjunto de características con el propósito de inscripción.
+        featuresinscripcion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_ENROLLMENT);
+
+        // Procesar la muestra de la huella y crear un conjunto de características con el propósito de verificacion.
+        featuresverificacion = extraerCaracteristicas(sample, DPFPDataPurpose.DATA_PURPOSE_VERIFICATION);
+
+        // Comprobar la calidad de la muestra de la huella y lo añade a su reclutador si es bueno
+        if (featuresinscripcion != null) {
+            try {
+                System.out.println("Las Caracteristicas de la Huella han sido creada");
+                Reclutador.addFeatures(featuresinscripcion);// Agregar las caracteristicas de la huella a la plantilla a crear
+
+                // Dibuja la huella dactilar capturada.
+                //Image image = CrearImagenHuella(sample);
+                //DibujarHuella(image);
+                //btnVerificar.setEnabled(true);
+                //btnIdentificar.setEnabled(true);
+                String[] pass = identificarHuella();
+                if (pass[2].equals("1")) {
+                    if (pass[1].equals("1")) {
+                        //admin
+                        paginaPrincipal_Admin adm = new paginaPrincipal_Admin();
+                        adm.setVisible(true);
+                        this.home.setVisible(false);
+                    } else {
+                        //comon user
+                        paginaPrincipal_Usuario u = new paginaPrincipal_Usuario(pass[0]);
+                        this.loguin.setVisible(false);
+                        u.setVisible(true);
+                    }
+                } else {
+                    EnviarTexto("Usuario no encontrado, Intente de nuevo");
+                }
+            } catch (DPFPImageQualityException ex) {
+                System.err.println("Error: " + ex.getMessage());
+            } finally {
+                EstadoHuellas();
+                // Comprueba si la plantilla se ha creado.
+                switch (Reclutador.getTemplateStatus()) {
+                    case TEMPLATE_STATUS_READY:	// informe de éxito y detiene  la captura de huellas
+                        stop();
+                        setTemplate(Reclutador.getTemplate());
+                        EnviarTexto("La Plantilla de la Huella ha Sido Creada, ya puede Verificarla o Identificarla");
+                        //btnIdentificar.setEnabled(false);
+                        //btnVerificar.setEnabled(false);
+                        //btnGuardar.setEnabled(true);
+                        //btnGuardar.grabFocus();
+                        break;
+
+                    case TEMPLATE_STATUS_FAILED: // informe de fallas y reiniciar la captura de huellas
+                        Reclutador.clear();
+                        stop();
+                        EstadoHuellas();
+                        setTemplate(null);
+                        //JOptionPane.showMessageDialog(CapturaHuella.this, "La Plantilla de la Huella no pudo ser creada, Repita el Proceso", "Inscripcion de Huellas Dactilares", JOptionPane.ERROR_MESSAGE);
+                        start();
+                        break;
+                }
+            }
+        }
+
+    }
+
+    public DPFPFeatureSet extraerCaracteristicas(DPFPSample sample, DPFPDataPurpose purpose) {
+        DPFPFeatureExtraction extractor = DPFPGlobal.getFeatureExtractionFactory().createFeatureExtraction();
+        try {
+            return extractor.createFeatureSet(sample, purpose);
+        } catch (DPFPImageQualityException e) {
+            return null;
+        }
+    }
+
+    public String[] identificarHuella() throws IOException {
+        DataManager manejador = new DataManager();
+        //[usuario,root,huella]
+        String[] datos = {"", "", "0"};
+        try {
+            //Establece los valores para la sentencia SQL
+            //Connection c = con.conectar();
+
+            //Obtiene todas las huellas de la bd
+            String sql = "SELECT usuario,root,huella FROM usuarios;";
+            ResultSet rs = manejador.obtenerDatos(sql);
+            //PreparedStatement identificarStmt = c.prepareStatement("SELECT huenombre,huehuella FROM somhue");
+            //ResultSet rs = identificarStmt.executeQuery();
+
+            //Si se encuentra el nombre en la base de datos
+            while (rs.next()) {
+                //Lee la plantilla de la base de datos
+                byte templateBuffer[] = rs.getBytes("huella");
+                datos[0] = rs.getString("usuario");
+                datos[1] = String.valueOf(rs.getInt("root"));
+                //Crea una nueva plantilla a partir de la guardada en la base de datos
+                DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
+                //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
+                setTemplate(referenceTemplate);
+
+                // Compara las caracteriticas de la huella recientemente capturda con la
+                // alguna plantilla guardada en la base de datos que coincide con ese tipo
+                DPFPVerificationResult result = Verificador.verify(featuresverificacion, getTemplate());
+
+                //compara las plantilas (actual vs bd)
+                //Si encuentra correspondencia dibuja el mapa
+                //e indica el nombre de la persona que coincidió.
+                if (result.isVerified()) {
+                    //crea la imagen de los datos guardado de las huellas guardadas en la base de datos
+                    //JOptionPane.showMessageDialog(null, "Las huella capturada es de " + nombre, "Verificacion de Huella", JOptionPane.INFORMATION_MESSAGE);
+                    datos[2] = "1";
+                    return datos;
+                }
+            }
+            //Si no encuentra alguna huella correspondiente al nombre lo indica con un mensaje
+
+            JOptionPane.showMessageDialog(null, "No existe ningún registro que coincida con la huella, Ingrese su usuario y contraseña", "Verificacion de Huella", JOptionPane.ERROR_MESSAGE);
+            jlblHuella.setIcon(new ImageIcon(getClass().getResource("/imagenesFrames/huellaRojo.png")));
+            repaint();
+            setTemplate(null);
+        } catch (SQLException e) {
+            //Si ocurre un error lo indica en la consola
+            System.err.println("Error al identificar huella dactilar." + e.getMessage());
+        } finally {
+            //con.desconectar();
+            manejador.cerrar();
+        }
+        return datos;
+    }
+
+    public void EstadoHuellas() {
+        EnviarTexto("Muestra de Huellas Necesarias para Guardar Template " + Reclutador.getFeaturesNeeded());
+    }
+
+    public void start() {
+        Lector.startCapture();
+        EnviarTexto("Utilizando el Lector de Huella Dactilar ");
+    }
+
+    public void stop() {
+        Lector.stopCapture();
+        EnviarTexto("No se está usando el Lector de Huella Dactilar ");
+    }
+
+    public DPFPTemplate getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(DPFPTemplate template) {
+        DPFPTemplate old = this.template;
+        this.template = template;
+        firePropertyChange(TEMPLATE_PROPERTY, old, template);
+    }
+
+    public void EnviarTexto(String string) {
+        //jtxtaStatus.append(string + "\n");
     }
 
     /**
@@ -44,6 +331,7 @@ public class docente extends javax.swing.JPanel {
         jbtnInicio = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jlblHuella = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1250, 590));
@@ -97,45 +385,60 @@ public class docente extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(109, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 621, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(162, 162, 162))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jbtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jtxtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jbtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jtxtpass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtxtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(166, 166, 166)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(903, 903, 903)
+                        .addComponent(jlblHuella, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 29, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel4)
-                .addGap(66, 66, 66)
-                .addComponent(jLabel3)
-                .addGap(2, 2, 2)
-                .addComponent(jtxtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtxtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel4)
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtxtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtxtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jlblHuella, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jbtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -159,7 +462,7 @@ public class docente extends javax.swing.JPanel {
     private void jbtnInicioMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtnInicioMouseExited
         jbtnInicio.setBackground(new Color(236, 71, 71));
     }//GEN-LAST:event_jbtnInicioMouseExited
-/*
+    /*
     public void validarBoton() {
         LocalTime horaActual = LocalTime.now();
         LocalTime inicio = LocalTime.parse("06:50");
@@ -181,11 +484,11 @@ public class docente extends javax.swing.JPanel {
         }
 
     }
-*/
+     */
     public void iniciarSesion() {
         LoguinController controlador = new LoguinController();
-        boolean[] verificado = controlador.verificar(jtxtuser.getText(), String.valueOf(jtxtpass.getPassword()), "0");
-        System.out.println(verificado[0]+"--"+verificado[1]);
+        boolean[] verificado = controlador.verificar(jtxtuser.getText(), String.valueOf(jtxtpass.getPassword()));
+        System.out.println(verificado[0] + "--" + verificado[1]);
         if (verificado[0] == false && verificado[1] == false) {
             JOptionPane.showMessageDialog(this, "No existe el usuario" + " " + jtxtuser.getText());
         }
@@ -193,9 +496,17 @@ public class docente extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Contraseña incorrecta intente de nuevo");
         }
         if (verificado[0] == true && verificado[1] == true) {
-            paginaPrincipal_Usuario u = new paginaPrincipal_Usuario(jtxtuser.getText());
-            this.loguin.setVisible(false);
-            u.setVisible(true);
+            if (verificado[2] == true) {
+                //admin
+                paginaPrincipal_Admin adm = new paginaPrincipal_Admin();
+                adm.setVisible(true);
+                this.home.setVisible(false);
+            } else {
+                //comon user
+                paginaPrincipal_Usuario u = new paginaPrincipal_Usuario(jtxtuser.getText());
+                this.loguin.setVisible(false);
+                u.setVisible(true);
+            }
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -206,6 +517,7 @@ public class docente extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton jbtnInicio;
+    private javax.swing.JLabel jlblHuella;
     private javax.swing.JPasswordField jtxtpass;
     private javax.swing.JTextField jtxtuser;
     // End of variables declaration//GEN-END:variables

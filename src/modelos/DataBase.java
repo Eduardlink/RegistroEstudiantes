@@ -18,20 +18,25 @@ public class DataBase {
 
     private String url;
     private String driver;
+    private String user;
+    private String pass;
     private Connection conexion;
 
     public DataBase() {
-        this.driver = "jdbc:sqlite";
-        this.url = "dataBase.db";
+        this.driver = "com.mysql.jdbc.Driver";
+        this.url = "jdbc:mysql://localhost/registroestudiantes";
+        this.user="root";
+        this.pass="";
     }
 
     protected void conectar() {
         try {
-            this.conexion = DriverManager.getConnection(this.driver + ":" + this.url);
+            Class.forName("com.mysql.jdbc.Driver");
+            this.conexion = DriverManager.getConnection(this.url,this.user,this.pass);
             if (!this.conexion.isClosed()) {
                     System.out.println("Conectado");
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

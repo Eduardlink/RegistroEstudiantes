@@ -67,6 +67,16 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         RegDocen = new javax.swing.JLabel();
         imgLogoEncab = new javax.swing.JLabel();
         jpPanelUsuarios = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -115,11 +125,11 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
             }
         });
 
+        Minim.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
+        Minim.setForeground(new java.awt.Color(255, 255, 255));
         Minim.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Minim.setText("_");
         Minim.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        Minim.setFont(new java.awt.Font("Tahoma", 0, 32)); // NOI18N
-        Minim.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jpMinimLayout = new javax.swing.GroupLayout(jpMinim);
         jpMinim.setLayout(jpMinimLayout);
@@ -190,12 +200,12 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         jpMenuBar.setToolTipText("");
         jpMenuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jbtnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/user.png"))); // NOI18N
-        jbtnUsuarios.setText("Usuarios");
         jbtnUsuarios.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnUsuarios.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jbtnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/user.png"))); // NOI18N
+        jbtnUsuarios.setText("Usuarios");
+        jbtnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnUsuariosActionPerformed(evt);
@@ -203,12 +213,12 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         });
         jpMenuBar.add(jbtnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, -10, 220, 80));
 
-        jbtnReportesDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/inactive_user.png"))); // NOI18N
-        jbtnReportesDocente.setText("Usuarios Inactivos");
         jbtnReportesDocente.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnReportesDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnReportesDocente.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jbtnReportesDocente.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnReportesDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/inactive_user.png"))); // NOI18N
+        jbtnReportesDocente.setText("Usuarios Inactivos");
+        jbtnReportesDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnReportesDocente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnReportesDocenteActionPerformed(evt);
@@ -216,10 +226,10 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         });
         jpMenuBar.add(jbtnReportesDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, -10, 290, 80));
 
-        jbtnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/casa-inteligente.png"))); // NOI18N
         jbtnHome.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnHome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnHome.setForeground(new java.awt.Color(63, 78, 79));
+        jbtnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/casa-inteligente.png"))); // NOI18N
+        jbtnHome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnHome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnHomeActionPerformed(evt);
@@ -227,12 +237,12 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         });
         jpMenuBar.add(jbtnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(-11, -5, 120, 70));
 
-        jbtnReportesFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/reporte-de-negocios.png"))); // NOI18N
-        jbtnReportesFecha.setText("Reportes por Fecha");
         jbtnReportesFecha.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnReportesFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnReportesFecha.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jbtnReportesFecha.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnReportesFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/reporte-de-negocios.png"))); // NOI18N
+        jbtnReportesFecha.setText("Reportes por Fecha");
+        jbtnReportesFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnReportesFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnReportesFechaActionPerformed(evt);
@@ -240,10 +250,10 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         });
         jpMenuBar.add(jbtnReportesFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, -10, 280, 80));
 
-        jbtnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/salir.png"))); // NOI18N
         jbtnExit.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnExit.setForeground(new java.awt.Color(63, 78, 79));
+        jbtnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/salir.png"))); // NOI18N
+        jbtnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnExitActionPerformed(evt);
@@ -294,6 +304,42 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         jpPanelUsuarios.setBackground(new java.awt.Color(255, 255, 255));
         jpPanelUsuarios.setLayout(new javax.swing.BoxLayout(jpPanelUsuarios, javax.swing.BoxLayout.LINE_AXIS));
         jPanel2.add(jpPanelUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 1250, 590));
+
+        jMenu1.setText("Archivo");
+
+        jMenuItem1.setText("Registro Estudiantes");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem6.setText("Registro Administradores");
+        jMenu1.add(jMenuItem6);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Reportes");
+
+        jMenuItem2.setText("Reporte general");
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Reporte por cedula");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Maestro Detalle por Apellido");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setText("Reporte grrafico de estudiantes");
+        jMenu2.add(jMenuItem5);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Salir");
+        jMenuBar1.add(jMenu3);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -354,7 +400,7 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
 
     private void jbtnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUsuariosActionPerformed
 
-        new CambiaPanel(jpPanelUsuarios, new paneles.crud());
+        new CambiaPanel(jpPanelUsuarios, new paneles.crudEstudiante());
     }//GEN-LAST:event_jbtnUsuariosActionPerformed
 
     private void jbtnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnHomeActionPerformed
@@ -377,8 +423,12 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jbtnExitActionPerformed
 
     private void jbtnReportesDocente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesDocente1ActionPerformed
-        // TODO add your handling code here:
+        new CambiaPanel(jpPanelUsuarios, new paneles.InformeDocentes());
     }//GEN-LAST:event_jbtnReportesDocente1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -431,6 +481,16 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel imgLogoFisei;
     private javax.swing.JLabel imgLogoUta;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JButton jbtnExit;
