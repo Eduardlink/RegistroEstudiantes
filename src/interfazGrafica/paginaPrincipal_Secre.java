@@ -5,6 +5,7 @@
  */
 package interfazGrafica;
 
+import java.awt.BorderLayout;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import paneles.CambiaPanel;
@@ -14,28 +15,58 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import paneles.loguin;
 
 /**
  *
  * @author spc
  */
-public class paginaPrincipal_Admin extends javax.swing.JFrame {
+public class paginaPrincipal_Secre extends javax.swing.JFrame {
 
     private ImageIcon imagen;
     private Icon icono;
     int xMouse, yMouse;
+    private String user;
 
     /**
      * Creates new form Login
      */
-    public paginaPrincipal_Admin() {
+    public paginaPrincipal_Secre(String usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.jbtnUsuarios.setSelected(false);
-        new CambiaPanel(jpPanelUsuarios, new paneles.Bienvenida());
 
+        user = usuario;
+        //new CambiaPanel(jpanPrincipal, new paneles.RegistroAsistencia(usuario));
+        //registroAsistencia();
     }
 
+    public paginaPrincipal_Secre() {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        //new CambiaPanel(jpanPrincipal, new paneles.RegistroAsistencia(this.user));
+        //registroAsistencia();
+    }
+/*
+    public void registroAsistencia() {
+        RegistroAsistencia d = new RegistroAsistencia(user);
+        d.setSize(1250, 590);
+        d.setLocation(0, 0);
+        jpanPrincipal.removeAll();
+        jpanPrincipal.add(d, BorderLayout.CENTER);
+        jpanPrincipal.revalidate();
+        jpanPrincipal.repaint();
+    }
+
+    public void informeDiario() {
+        InformeDiario d = new InformeDiario(user);
+        d.setSize(1250, 590);
+        d.setLocation(0, 0);
+        jpanPrincipal.removeAll();
+        jpanPrincipal.add(d, BorderLayout.CENTER);
+        jpanPrincipal.revalidate();
+        jpanPrincipal.repaint();
+    }
+*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,26 +88,15 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         jpCerrar = new javax.swing.JPanel();
         X = new javax.swing.JLabel();
         jpMenuBar = new javax.swing.JPanel();
-        jbtnUsuarios = new javax.swing.JButton();
-        jbtnReportesDocente = new javax.swing.JButton();
-        jbtnHome = new javax.swing.JButton();
+        jbtnHome1 = new javax.swing.JButton();
+        jbtnExit1 = new javax.swing.JButton();
         jbtnReportesFecha = new javax.swing.JButton();
-        jbtnExit = new javax.swing.JButton();
-        jbtnReportesDocente1 = new javax.swing.JButton();
+        jbtnReportesFecha1 = new javax.swing.JButton();
         jpHeader = new javax.swing.JPanel();
         RegDocen = new javax.swing.JLabel();
         imgLogoEncab = new javax.swing.JLabel();
-        jpPanelUsuarios = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        jLabel1 = new javax.swing.JLabel();
+        jpanPrincipal = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -90,7 +110,7 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         jpFooter.setPreferredSize(new java.awt.Dimension(1230, 70));
         jpFooter.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 24)); // NOI18N
         jLabel2.setText("Universidad Técnica de Ambato - FISEI");
         jpFooter.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
 
@@ -196,83 +216,57 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         jPanel2.add(jpOpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1250, 30));
 
         jpMenuBar.setBackground(new java.awt.Color(63, 78, 79));
-        jpMenuBar.setPreferredSize(new java.awt.Dimension(1250, 37));
         jpMenuBar.setToolTipText("");
+        jpMenuBar.setPreferredSize(new java.awt.Dimension(1250, 37));
         jpMenuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jbtnUsuarios.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnUsuarios.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        jbtnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/students.png"))); // NOI18N
-        jbtnUsuarios.setText("Estudiantes");
-        jbtnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        jbtnHome1.setBackground(new java.awt.Color(63, 78, 79));
+        jbtnHome1.setForeground(new java.awt.Color(63, 78, 79));
+        jbtnHome1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/casa-inteligente.png"))); // NOI18N
+        jbtnHome1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtnHome1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnUsuariosActionPerformed(evt);
+                jbtnHome1ActionPerformed(evt);
             }
         });
-        jpMenuBar.add(jbtnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, -10, 220, 80));
+        jpMenuBar.add(jbtnHome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 120, 80));
 
-        jbtnReportesDocente.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnReportesDocente.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        jbtnReportesDocente.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnReportesDocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/userDeleted.png"))); // NOI18N
-        jbtnReportesDocente.setText("Usuarios Inactivos");
-        jbtnReportesDocente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnReportesDocente.addActionListener(new java.awt.event.ActionListener() {
+        jbtnExit1.setBackground(new java.awt.Color(63, 78, 79));
+        jbtnExit1.setForeground(new java.awt.Color(63, 78, 79));
+        jbtnExit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/salir.png"))); // NOI18N
+        jbtnExit1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtnExit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnReportesDocenteActionPerformed(evt);
+                jbtnExit1ActionPerformed(evt);
             }
         });
-        jpMenuBar.add(jbtnReportesDocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, -10, 290, 80));
-
-        jbtnHome.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnHome.setForeground(new java.awt.Color(63, 78, 79));
-        jbtnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/casa-inteligente.png"))); // NOI18N
-        jbtnHome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnHomeActionPerformed(evt);
-            }
-        });
-        jpMenuBar.add(jbtnHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(-11, -5, 120, 70));
+        jpMenuBar.add(jbtnExit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, -20, 120, 100));
 
         jbtnReportesFecha.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnReportesFecha.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
+        jbtnReportesFecha.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
         jbtnReportesFecha.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnReportesFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/user.png"))); // NOI18N
-        jbtnReportesFecha.setText("Usuarios");
+        jbtnReportesFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/studentDeleted.png"))); // NOI18N
+        jbtnReportesFecha.setText("Estudiantes Inactivos");
         jbtnReportesFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnReportesFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnReportesFechaActionPerformed(evt);
             }
         });
-        jpMenuBar.add(jbtnReportesFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, -10, 280, 80));
+        jpMenuBar.add(jbtnReportesFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, -20, 260, 100));
 
-        jbtnExit.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnExit.setForeground(new java.awt.Color(63, 78, 79));
-        jbtnExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/salir.png"))); // NOI18N
-        jbtnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnExit.addActionListener(new java.awt.event.ActionListener() {
+        jbtnReportesFecha1.setBackground(new java.awt.Color(63, 78, 79));
+        jbtnReportesFecha1.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
+        jbtnReportesFecha1.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnReportesFecha1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/students.png"))); // NOI18N
+        jbtnReportesFecha1.setText("Estudiantes");
+        jbtnReportesFecha1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtnReportesFecha1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnExitActionPerformed(evt);
+                jbtnReportesFecha1ActionPerformed(evt);
             }
         });
-        jpMenuBar.add(jbtnExit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, -20, 120, 100));
-
-        jbtnReportesDocente1.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnReportesDocente1.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        jbtnReportesDocente1.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnReportesDocente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/studentDeleted.png"))); // NOI18N
-        jbtnReportesDocente1.setText("Estudiantes Inactivos");
-        jbtnReportesDocente1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnReportesDocente1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnReportesDocente1ActionPerformed(evt);
-            }
-        });
-        jpMenuBar.add(jbtnReportesDocente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, -10, 310, 80));
+        jpMenuBar.add(jbtnReportesFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, -20, 260, 100));
 
         jPanel2.add(jpMenuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1250, 60));
 
@@ -300,46 +294,22 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         jpHeader.add(imgLogoEncab, new org.netbeans.lib.awtextra.AbsoluteConstraints(827, 13, 93, 74));
 
         jPanel2.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 260, 80, 40));
 
-        jpPanelUsuarios.setBackground(new java.awt.Color(255, 255, 255));
-        jpPanelUsuarios.setLayout(new javax.swing.BoxLayout(jpPanelUsuarios, javax.swing.BoxLayout.LINE_AXIS));
-        jPanel2.add(jpPanelUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 1250, 590));
+        jpanPrincipal.setBackground(new java.awt.Color(255, 255, 255));
 
-        jMenu1.setText("Archivo");
+        javax.swing.GroupLayout jpanPrincipalLayout = new javax.swing.GroupLayout(jpanPrincipal);
+        jpanPrincipal.setLayout(jpanPrincipalLayout);
+        jpanPrincipalLayout.setHorizontalGroup(
+            jpanPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1250, Short.MAX_VALUE)
+        );
+        jpanPrincipalLayout.setVerticalGroup(
+            jpanPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 590, Short.MAX_VALUE)
+        );
 
-        jMenuItem1.setText("Registro Estudiantes");
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem6.setText("Registro Administradores");
-        jMenu1.add(jMenuItem6);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Reportes");
-
-        jMenuItem2.setText("Reporte general");
-        jMenu2.add(jMenuItem2);
-
-        jMenuItem3.setText("Reporte por cedula");
-        jMenu2.add(jMenuItem3);
-
-        jMenuItem4.setText("Maestro Detalle por Apellido");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem4);
-
-        jMenuItem5.setText("Reporte grrafico de estudiantes");
-        jMenu2.add(jMenuItem5);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("Salir");
-        jMenuBar1.add(jMenu3);
-
-        setJMenuBar(jMenuBar1);
+        jPanel2.add(jpanPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 1250, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -398,37 +368,22 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_XMouseClicked
 
-    private void jbtnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUsuariosActionPerformed
+    private void jbtnHome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnHome1ActionPerformed
+        //registroAsistencia();
+    }//GEN-LAST:event_jbtnHome1ActionPerformed
 
-        new CambiaPanel(jpPanelUsuarios, new paneles.crudEstudiante());
-    }//GEN-LAST:event_jbtnUsuariosActionPerformed
-
-    private void jbtnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnHomeActionPerformed
-        new CambiaPanel(jpPanelUsuarios, new paneles.Bienvenida());
-    }//GEN-LAST:event_jbtnHomeActionPerformed
+    private void jbtnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExit1ActionPerformed
+        new InicioPrincipal().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jbtnExit1ActionPerformed
 
     private void jbtnReportesFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesFechaActionPerformed
-
-        //new CambiaPanel(jpPanelUsuarios, new paneles.BusquedaFecha());
+        //informeDiario();
     }//GEN-LAST:event_jbtnReportesFechaActionPerformed
 
-    private void jbtnReportesDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesDocenteActionPerformed
-        new CambiaPanel(jpPanelUsuarios, new paneles.usuariosInactivos());
-    }//GEN-LAST:event_jbtnReportesDocenteActionPerformed
-
-    private void jbtnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExitActionPerformed
-        InicioPrincipal loguin = new InicioPrincipal();
-        loguin.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jbtnExitActionPerformed
-
-    private void jbtnReportesDocente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesDocente1ActionPerformed
-        //new CambiaPanel(jpPanelUsuarios, new paneles.InformeDocentes());
-    }//GEN-LAST:event_jbtnReportesDocente1ActionPerformed
-
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jbtnReportesFecha1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesFecha1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jbtnReportesFecha1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,14 +402,38 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(paginaPrincipal_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(paginaPrincipal_Secre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(paginaPrincipal_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(paginaPrincipal_Secre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(paginaPrincipal_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(paginaPrincipal_Secre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(paginaPrincipal_Admin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(paginaPrincipal_Secre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -467,7 +446,7 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new paginaPrincipal_Admin().setVisible(true);
+                new paginaPrincipal_Secre().setVisible(true);
             }
         });
     }
@@ -480,31 +459,20 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
     private javax.swing.JLabel imgLogoEncab;
     private javax.swing.JLabel imgLogoFisei;
     private javax.swing.JLabel imgLogoUta;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JButton jbtnExit;
-    private javax.swing.JButton jbtnHome;
-    private javax.swing.JButton jbtnReportesDocente;
-    private javax.swing.JButton jbtnReportesDocente1;
+    private javax.swing.JButton jbtnExit1;
+    private javax.swing.JButton jbtnHome1;
     private javax.swing.JButton jbtnReportesFecha;
-    private javax.swing.JButton jbtnUsuarios;
+    private javax.swing.JButton jbtnReportesFecha1;
     private javax.swing.JPanel jpCerrar;
     private javax.swing.JPanel jpFooter;
     private javax.swing.JPanel jpHeader;
     private javax.swing.JPanel jpMenuBar;
     private javax.swing.JPanel jpMinim;
     private javax.swing.JPanel jpOpBar;
-    private javax.swing.JPanel jpPanelUsuarios;
+    private javax.swing.JPanel jpanPrincipal;
     // End of variables declaration//GEN-END:variables
 }

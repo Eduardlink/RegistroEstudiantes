@@ -17,7 +17,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.table.DefaultTableModel;
 import modelos.DataManager;
-import vistas.CRUD;
+import Test.CRUD;
 
 /**
  *
@@ -30,14 +30,18 @@ public class crudController {
     public crudController() {
         manejador = new DataManager();
     }
-
-    //agregar
-    public void agregarUsuario(String cedula, String nombre, String apellido, String telefono, String direccion) {
+    
+    //ESTUDIANTES
+    
+    //create
+    public void agregarEstudiante(String cedula, String nombre, String apellido, String telefono, String direccion) {
 
         String sql = "INSERT INTO estudiantes(cedula,nombre,apellido,telefono,direccion,estado) "
                 + "VALUES ('"+cedula+"','"+nombre+"','"+apellido+"','"+telefono+"','"+direccion+"','1');";
         manejador.ejecutarConsulta(sql);
     }
+    
+    //read
 
     public String crearUsuario(String nombre, String apellido, String cedula) {
         nombre = nombre.toLowerCase().substring(0, 1);

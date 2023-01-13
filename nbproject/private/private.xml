@@ -5,12 +5,10 @@
         <group>
             <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/docente.java</file>
             <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/crud.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/Conexion/conexion.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/modelos/DataManager.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/paginaPrincipal_Admin.java</file>
             <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/controladores/LoguinController.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/Conexion/prueba.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/admin.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/controladores/crudController.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/InicioPrincipal.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/crudEstudiante.java</file>
         </group>
     </open-files>
 </project-private>
