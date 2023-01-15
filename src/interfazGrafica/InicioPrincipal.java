@@ -9,7 +9,6 @@ import java.awt.*;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.*;
-import paneles.loguin;
 
 /**
  *
@@ -27,18 +26,10 @@ public class InicioPrincipal extends javax.swing.JFrame {
     public InicioPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.loguin();
+        
     }
 
-    public void loguin() {
-        loguin d = new loguin(this);
-        d.setSize(1250, 590);
-        d.setLocation(0, 0);
-        PanelInicio.removeAll();
-        PanelInicio.add(d, BorderLayout.CENTER);
-        PanelInicio.revalidate();
-        PanelInicio.repaint();
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -66,6 +57,8 @@ public class InicioPrincipal extends javax.swing.JFrame {
         imgLogoEncab = new javax.swing.JLabel();
         PanelInicio = new javax.swing.JPanel();
         jpMenuBar = new javax.swing.JPanel();
+        jbtndocente = new javax.swing.JButton();
+        jbtnadmin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -96,9 +89,9 @@ public class InicioPrincipal extends javax.swing.JFrame {
         imgLogoUta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/Logo UTA.png"))); // NOI18N
         jPanel5.add(imgLogoUta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 50, 50));
 
-        jpFooter.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 0, 160, 70));
+        jpFooter.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 0, 160, 70));
 
-        jPanel3.add(jpFooter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 780, 1250, -1));
+        jPanel3.add(jpFooter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 780, 1500, -1));
 
         jpOpBar.setBackground(new java.awt.Color(204, 204, 204));
         jpOpBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -133,13 +126,10 @@ public class InicioPrincipal extends javax.swing.JFrame {
         );
         jpMinimLayout.setVerticalGroup(
             jpMinimLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpMinimLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Minim, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(Minim, javax.swing.GroupLayout.PREFERRED_SIZE, 30, Short.MAX_VALUE)
         );
 
-        jpOpBar.add(jpMinim, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 0, 40, 30));
+        jpOpBar.add(jpMinim, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 0, 40, 30));
 
         jpCerrar.setBackground(new java.awt.Color(255, 51, 51));
         jpCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -174,17 +164,19 @@ public class InicioPrincipal extends javax.swing.JFrame {
             jpCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCerrarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(X, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(X, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpCerrarLayout.setVerticalGroup(
             jpCerrarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(X, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jpCerrarLayout.createSequentialGroup()
+                .addComponent(X, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jpOpBar.add(jpCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 0, 50, 30));
+        jpOpBar.add(jpCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 0, 50, 30));
 
-        jPanel3.add(jpOpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1250, 30));
+        jPanel3.add(jpOpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1500, 30));
 
         jpHeader.setBackground(new java.awt.Color(236, 71, 71));
         jpHeader.setPreferredSize(new java.awt.Dimension(1250, 100));
@@ -202,14 +194,14 @@ public class InicioPrincipal extends javax.swing.JFrame {
 
         RegDocen.setFont(new java.awt.Font("Microsoft YaHei", 1, 32)); // NOI18N
         RegDocen.setForeground(new java.awt.Color(255, 255, 255));
-        RegDocen.setText("REGISTRO DE DOCENTES");
+        RegDocen.setText("REGISTRO ESTUDIANTIL");
         jpHeader.add(RegDocen, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, -1, -1));
 
         imgLogoEncab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imgLogoEncab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/Logo_Encab.png"))); // NOI18N
+        imgLogoEncab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/registroEstudiantil.png"))); // NOI18N
         jpHeader.add(imgLogoEncab, new org.netbeans.lib.awtextra.AbsoluteConstraints(827, 13, 93, 74));
 
-        jPanel3.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+        jPanel3.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1500, -1));
 
         PanelInicio.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -224,13 +216,50 @@ public class InicioPrincipal extends javax.swing.JFrame {
             .addGap(0, 590, Short.MAX_VALUE)
         );
 
-        jPanel3.add(PanelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 1250, 590));
+        jPanel3.add(PanelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 1250, 590));
 
         jpMenuBar.setBackground(new java.awt.Color(63, 78, 79));
         jpMenuBar.setToolTipText("");
         jpMenuBar.setPreferredSize(new java.awt.Dimension(1250, 37));
         jpMenuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jpMenuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1250, 60));
+
+        jbtndocente.setBackground(new java.awt.Color(63, 78, 79));
+        jbtndocente.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 24)); // NOI18N
+        jbtndocente.setForeground(new java.awt.Color(255, 255, 255));
+        jbtndocente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/user_icon.png"))); // NOI18N
+        jbtndocente.setText("Acceder como docente");
+        jbtndocente.setBorder(null);
+        jbtndocente.setBorderPainted(false);
+        jbtndocente.setContentAreaFilled(false);
+        jbtndocente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtndocente.setDefaultCapable(false);
+        jbtndocente.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jbtndocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtndocenteActionPerformed(evt);
+            }
+        });
+        jpMenuBar.add(jbtndocente, new org.netbeans.lib.awtextra.AbsoluteConstraints(1180, -10, 330, 100));
+
+        jbtnadmin.setBackground(new java.awt.Color(63, 78, 79));
+        jbtnadmin.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 24)); // NOI18N
+        jbtnadmin.setForeground(new java.awt.Color(255, 255, 255));
+        jbtnadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/admin_icon.png"))); // NOI18N
+        jbtnadmin.setText("Acceder como administrador");
+        jbtnadmin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jbtnadmin.setBorderPainted(false);
+        jbtnadmin.setContentAreaFilled(false);
+        jbtnadmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtnadmin.setDefaultCapable(false);
+        jbtnadmin.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jbtnadmin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnadminActionPerformed(evt);
+            }
+        });
+        jpMenuBar.add(jbtnadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, -10, 400, 100));
+
+        jPanel3.add(jpMenuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1500, 60));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -238,7 +267,7 @@ public class InicioPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1500, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,6 +319,16 @@ public class InicioPrincipal extends javax.swing.JFrame {
         this.xMouse = evt.getX();
         this.yMouse = evt.getY();
     }//GEN-LAST:event_jpHeaderMousePressed
+
+    private void jbtndocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtndocenteActionPerformed
+        jbtnadmin.setVisible(true);
+   
+    }//GEN-LAST:event_jbtndocenteActionPerformed
+
+    private void jbtnadminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnadminActionPerformed
+        jbtnadmin.setVisible(false);
+        
+    }//GEN-LAST:event_jbtnadminActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,6 +382,8 @@ public class InicioPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JButton jbtnadmin;
+    private javax.swing.JButton jbtndocente;
     private javax.swing.JPanel jpCerrar;
     private javax.swing.JPanel jpFooter;
     private javax.swing.JPanel jpHeader;
