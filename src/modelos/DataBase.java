@@ -34,7 +34,7 @@ public class DataBase {
             Class.forName("com.mysql.jdbc.Driver");
             this.conexion = DriverManager.getConnection(this.url,this.user,this.pass);
             if (!this.conexion.isClosed()) {
-                    System.out.println("Conectado");
+                    //System.out.println("Conectado");
             }
         } catch (Exception ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);

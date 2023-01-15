@@ -37,13 +37,21 @@ public class crudAdmin extends javax.swing.JPanel {
             public void valueChanged(ListSelectionEvent lse) {
                 if (jtblCrud.getSelectedRow() != -1) {
                     Integer fila = jtblCrud.getSelectedRow();
-                    jtxtCedula.setText(jtblCrud.getValueAt(fila, 1).toString());
-                    jtxtNombre.setText(jtblCrud.getValueAt(fila, 2).toString());
-                    jtxtApellido.setText(jtblCrud.getValueAt(fila, 3).toString());
-                    jtxtTelefono.setText(jtblCrud.getValueAt(fila, 4).toString());
-                    jtxtDireccion.setText(jtblCrud.getValueAt(fila, 5).toString());
-                    jtxtUsuario.setText(jtblCrud.getValueAt(fila, 0).toString());
-                    jtxtClave.setText(jtblCrud.getValueAt(fila, 4).toString());
+                    String[] datos = new crudController().buscarCedula(jtblCrud.getValueAt(fila, 1).toString());
+                    jtxtCedula.setText(datos[0]);
+                    jtxtNombre.setText(datos[1]);
+                    jtxtApellido.setText(datos[2]);
+                    jtxtTelefono.setText(datos[3]);
+                    jtxtDireccion.setText(datos[4]);
+                    jtxtUsuario.setText(datos[5]);
+                    jtxtClave.setText(datos[6]);
+                    if(datos[7].equals("1")){
+                        jchkAdmin.setSelected(true);
+                        jchkSecre.setSelected(false);
+                    }else{
+                        jchkAdmin.setSelected(false);
+                        jchkSecre.setSelected(true);
+                    }
                 }
             }
 
@@ -92,7 +100,8 @@ public class crudAdmin extends javax.swing.JPanel {
         jLabel25 = new javax.swing.JLabel();
         jbtnCancelar = new javax.swing.JButton();
         jbtnHuella = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
+        jlblVer = new javax.swing.JLabel();
+        jlblOcultar = new javax.swing.JLabel();
         jpPanelOpciones = new javax.swing.JPanel();
         jpAniadir = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -103,16 +112,11 @@ public class crudAdmin extends javax.swing.JPanel {
         jpActualizar = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jpBuscar2 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtblCrud = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         jtxtBusqueda = new javax.swing.JTextField();
-        jbtnBuscar = new javax.swing.JButton();
-        jbtnUpdate = new javax.swing.JButton();
 
         jpCrud.setBackground(new java.awt.Color(255, 255, 255));
         jpCrud.setPreferredSize(new java.awt.Dimension(1250, 590));
@@ -263,7 +267,9 @@ public class crudAdmin extends javax.swing.JPanel {
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/view.png"))); // NOI18N
+        jlblVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/view.png"))); // NOI18N
+
+        jlblOcultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/hide.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -302,7 +308,9 @@ public class crudAdmin extends javax.swing.JPanel {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jchkAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel24))
+                                .addComponent(jLabel24)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlblOcultar))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jtxtUsuario, javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,12 +321,12 @@ public class crudAdmin extends javax.swing.JPanel {
                                     .addComponent(jtxtClave, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7))
+                                .addComponent(jlblVer))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jchkSecre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel25)))))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,14 +364,15 @@ public class crudAdmin extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jtxtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4))
-                    .addComponent(jLabel7))
+                    .addComponent(jlblVer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jchkAdmin)
-                            .addComponent(jLabel24))
+                            .addComponent(jLabel24)
+                            .addComponent(jlblOcultar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jchkSecre)
@@ -512,50 +521,6 @@ public class crudAdmin extends javax.swing.JPanel {
                 .addComponent(jLabel11))
         );
 
-        jpBuscar2.setBackground(new java.awt.Color(204, 204, 204));
-        jpBuscar2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jpBuscar2.setPreferredSize(new java.awt.Dimension(105, 105));
-        jpBuscar2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jpBuscar2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jpBuscar2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jpBuscar2MouseExited(evt);
-            }
-        });
-
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/reclutamiento.png"))); // NOI18N
-
-        jLabel16.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Buscar");
-
-        javax.swing.GroupLayout jpBuscar2Layout = new javax.swing.GroupLayout(jpBuscar2);
-        jpBuscar2.setLayout(jpBuscar2Layout);
-        jpBuscar2Layout.setHorizontalGroup(
-            jpBuscar2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBuscar2Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
-                .addGroup(jpBuscar2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBuscar2Layout.createSequentialGroup()
-                        .addComponent(jLabel15)
-                        .addGap(29, 29, 29))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpBuscar2Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(20, 20, 20))))
-        );
-        jpBuscar2Layout.setVerticalGroup(
-            jpBuscar2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpBuscar2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel16))
-        );
-
         javax.swing.GroupLayout jpPanelOpcionesLayout = new javax.swing.GroupLayout(jpPanelOpciones);
         jpPanelOpciones.setLayout(jpPanelOpcionesLayout);
         jpPanelOpcionesLayout.setHorizontalGroup(
@@ -563,11 +528,9 @@ public class crudAdmin extends javax.swing.JPanel {
             .addGroup(jpPanelOpcionesLayout.createSequentialGroup()
                 .addGap(82, 82, 82)
                 .addComponent(jpAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addComponent(jpEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addComponent(jpBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
+                .addGap(234, 234, 234)
                 .addComponent(jpActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(121, 121, 121))
         );
@@ -575,7 +538,6 @@ public class crudAdmin extends javax.swing.JPanel {
             jpPanelOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jpAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jpEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jpBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jpActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -583,6 +545,7 @@ public class crudAdmin extends javax.swing.JPanel {
 
         jScrollPane1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
 
+        jtblCrud.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 14)); // NOI18N
         jtblCrud.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -594,7 +557,6 @@ public class crudAdmin extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtblCrud.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(jtblCrud);
 
         jLabel12.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
@@ -612,24 +574,6 @@ public class crudAdmin extends javax.swing.JPanel {
             }
         });
 
-        jbtnBuscar.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
-        jbtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/buscar.png"))); // NOI18N
-        jbtnBuscar.setText("Buscar");
-        jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnBuscarActionPerformed(evt);
-            }
-        });
-
-        jbtnUpdate.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
-        jbtnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/actualizar.png"))); // NOI18N
-        jbtnUpdate.setText("Actualizar tabla");
-        jbtnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnUpdateActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -642,11 +586,7 @@ public class crudAdmin extends javax.swing.JPanel {
                         .addGap(34, 34, 34)
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbtnBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbtnUpdate)))
+                        .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -655,10 +595,8 @@ public class crudAdmin extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnBuscar)
-                    .addComponent(jbtnUpdate))
-                .addGap(28, 28, 28)
+                    .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(179, Short.MAX_VALUE))
         );
@@ -723,17 +661,9 @@ public class crudAdmin extends javax.swing.JPanel {
         this.jbtnGuardar.setEnabled(true);
     }//GEN-LAST:event_jpAniadirMouseClicked
 
-    private void jpBuscar2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpBuscar2MouseEntered
-        jpBuscar2.setBackground(Color.white);
-    }//GEN-LAST:event_jpBuscar2MouseEntered
-
     private void jpActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpActualizarMouseEntered
         jpActualizar.setBackground(Color.white);
     }//GEN-LAST:event_jpActualizarMouseEntered
-
-    private void jpBuscar2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpBuscar2MouseExited
-        jpBuscar2.setBackground(new Color(204, 204, 204));
-    }//GEN-LAST:event_jpBuscar2MouseExited
 
     private void jpActualizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpActualizarMouseExited
         jpActualizar.setBackground(new Color(204, 204, 204));
@@ -752,7 +682,7 @@ public class crudAdmin extends javax.swing.JPanel {
                 checkSeleccion = 0;
             }
 
-            if (new crudController().buscarCedula(jtxtCedula.getText()).isEmpty()) {
+            if (new crudController().exiteUsuario(jtxtCedula.getText(), "usuarios")) {
 /*
                     new crudController().agregarUsuario(jtxtNombre.getText(),
                             jtxtApellido.getText(),
@@ -766,18 +696,10 @@ public class crudAdmin extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "El usuario ya existe");
             }
 
-            jtblCrud.setModel(new crudController().cargarTabla());
+            //jtblCrud.setModel(new crudController().cargarTabla());
         }
 
     }//GEN-LAST:event_jbtnGuardarActionPerformed
-
-    private void jpBuscar2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpBuscar2MouseClicked
-        this.bloquearTextos();
-        jbtnActualizar.setEnabled(false);
-        jtxtBusqueda.setEnabled(true);
-        jbtnBuscar.setEnabled(true);
-
-    }//GEN-LAST:event_jpBuscar2MouseClicked
 
     private void jpActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpActualizarMouseClicked
         this.desbloquearTextosActualizar();
@@ -858,20 +780,9 @@ public class crudAdmin extends javax.swing.JPanel {
             checkSeleccion = 0;
         }
         //new crudController().updateUser(jtxtNombre.getText(), jtxtApellido.getText(), jtxtCedula.getText(), String.valueOf(checkSeleccion));
-        jtblCrud.setModel(new crudController().cargarTabla());
+        //jtblCrud.setModel(new crudController().cargarTabla());
         this.bloquearTextosyBusqueda();
     }//GEN-LAST:event_jbtnActualizarActionPerformed
-
-    private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
-        if (new crudController().buscarCedula(jtxtBusqueda.getText()).size() == 0) {
-            JOptionPane.showMessageDialog(null, "No existe un usuario con la cédula especificada");
-        } else {
-            jtblCrud.setModel(new crudController().cargarTabla(jtxtBusqueda.getText()));
-
-        }
-        jtblCrud.setRowHeight(30);
-        formatoTitulos();
-    }//GEN-LAST:event_jbtnBuscarActionPerformed
 
     private void jpEliminarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpEliminarMouseExited
         jpEliminar.setBackground(new Color(204, 204, 204));
@@ -882,17 +793,10 @@ public class crudAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_jpEliminarMouseEntered
 
     private void jpEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpEliminarMouseClicked
-        new crudController().eliminarUsuario(jtxtCedula.getText());
+        //new crudController().eliminarUsuario(jtxtCedula.getText());
 
-        jtblCrud.setModel(new crudController().cargarTabla());
+        //jtblCrud.setModel(new crudController().cargarTabla());
     }//GEN-LAST:event_jpEliminarMouseClicked
-
-    private void jbtnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnUpdateActionPerformed
-        jtblCrud.setRowHeight(30);
-        jtblCrud.setModel(new crudController().cargarTabla());
-        formatoTitulos();
-        jtxtBusqueda.setText("");
-    }//GEN-LAST:event_jbtnUpdateActionPerformed
 
     private void jtxtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtTelefonoFocusLost
         // TODO add your handling code here:
@@ -946,7 +850,7 @@ public class crudAdmin extends javax.swing.JPanel {
         //Busqueda
         jtxtBusqueda.setEnabled(false);
         //Botones
-        jbtnBuscar.setEnabled(false);
+        //jbtnBuscar.setEnabled(false);
         jbtnGuardar.setEnabled(false);
         jbtnActualizar.setEnabled(false);
     }
@@ -1035,8 +939,6 @@ public class crudAdmin extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1045,25 +947,23 @@ public class crudAdmin extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnActualizar;
-    private javax.swing.JButton jbtnBuscar;
     private javax.swing.JButton jbtnCancelar;
     private javax.swing.JButton jbtnGuardar;
     private javax.swing.JButton jbtnHuella;
-    private javax.swing.JButton jbtnUpdate;
     private javax.swing.JCheckBox jchkAdmin;
     private javax.swing.JCheckBox jchkSecre;
     private javax.swing.JLabel jlApellido;
     private javax.swing.JLabel jlNombre;
+    private javax.swing.JLabel jlblOcultar;
+    private javax.swing.JLabel jlblVer;
     private javax.swing.JPanel jpActualizar;
     private javax.swing.JPanel jpAniadir;
-    private javax.swing.JPanel jpBuscar2;
     private javax.swing.JPanel jpCrud;
     private javax.swing.JPanel jpEliminar;
     private javax.swing.JPanel jpPanelOpciones;

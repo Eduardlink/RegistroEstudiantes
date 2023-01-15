@@ -171,7 +171,7 @@ public class estudiantesInactivos extends javax.swing.JPanel {
 
     private void jbtnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRestaurarActionPerformed
         crudController controlador = new crudController();
-        controlador.actualizarEstado(jLabelCedula.getText());
+        //controlador.actualizarEstado(jLabelCedula.getText());
         JOptionPane.showMessageDialog(null, "Usuario activado");
         jtblInactivos.setRowHeight(30);
         jtblInactivos.setModel(controlador.cargarTablaInactivos());

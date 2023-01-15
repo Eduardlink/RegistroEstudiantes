@@ -29,7 +29,7 @@ public class crudEstudiante extends javax.swing.JPanel {
         initComponents();
         DefaultTableModel modeloTabla = new DefaultTableModel();
         jtblCrud.setRowHeight(30);
-        jtblCrud.setModel(new crudController().cargarTabla());
+        jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
         formatoTitulos();
         this.bloquearTextosyBusqueda();
         jtblCrud.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -44,21 +44,6 @@ public class crudEstudiante extends javax.swing.JPanel {
                     jtxtApellido.setText(jtblCrud.getValueAt(fila, 2).toString());
                     jtxtTelefono.setText(jtblCrud.getValueAt(fila, 3).toString());
                     jtxtDireccion.setText(jtblCrud.getValueAt(fila, 4).toString());
-                    /*
-                    String jornadaMatutina = jtblCrud.getValueAt(fila, 5).toString();
-                    String[] matutina = jornadaMatutina.split("-");
-                    Mat_man.setText(matutina[0]);
-                    Mat_tar.setText(matutina[1]);
-                    String jornadaVespertina = jtblCrud.getValueAt(fila, 6).toString();
-                    String[] vespertina = jornadaVespertina.split("-");
-                    Vesp_man.setText(vespertina[0]);
-                    Vesp_tar.setText(vespertina[1]);
-                    if (jtblCrud.getValueAt(fila, 4).toString().equals("Administrador")) {
-                        jchkRoot.setSelected(true);
-                    } else {
-                        jchkRoot.setSelected(false);
-                    }
-                     */
                 }
             }
 
@@ -576,17 +561,9 @@ public class crudEstudiante extends javax.swing.JPanel {
 
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
 
-        if (!(jtxtNombre.getText().isEmpty() || jtxtApellido.getText().isEmpty()
-                || jtxtCedula.getText().isEmpty() || jtxtCedula.getText().isEmpty())) {
-            /*
-            int checkSeleccion;
-            if (jchkRoot.isSelected()) {
-                checkSeleccion = 1;
-            } else {
-                checkSeleccion = 0;
-            }
-             */
-            if (new crudController().buscarCedula(jtxtCedula.getText()).isEmpty()) {
+        if (!(jtxtCedula.getText().isEmpty() || jtxtNombre.getText().isEmpty()
+                || jtxtApellido.getText().isEmpty() || jtxtTelefono.getText().isEmpty()||jtxtDireccion.getText().isEmpty())) {
+            if (new crudController().exiteUsuario(jtxtCedula.getText(), "estudiantes")) {
                 //if (this.validarHorasTrabajo()) {
                 new crudController().agregarEstudiante(jtxtCedula.getText(),
                         jtxtNombre.getText(),
@@ -601,7 +578,9 @@ public class crudEstudiante extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "El usuario ya existe");
             }
 
-            jtblCrud.setModel(new crudController().cargarTabla());
+            jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
+        }else{
+            JOptionPane.showMessageDialog(this,"Complete todos los campos antes de guardar");
         }
 
     }//GEN-LAST:event_jbtnGuardarActionPerformed
@@ -639,11 +618,7 @@ public class crudEstudiante extends javax.swing.JPanel {
 
         boolean mayusculas = key >= 65 && key <= 90;
         boolean minusculas = key >= 97 && key <= 122;
-//        boolean tildes = key <= 160 && key <= 163;
-//        boolean tildes2 = key == 130;
         boolean espacio = key == 32;
-//        boolean acento = key == 239;
-//        boolean enie = key ==164 && key ==165; 
 
         if (!(minusculas || mayusculas || espacio)) {
             evt.consume();
@@ -681,11 +656,7 @@ public class crudEstudiante extends javax.swing.JPanel {
     }//GEN-LAST:event_jtxtBusquedaKeyTyped
 
     private void jtxtBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBusquedaFocusLost
-        /*
-        if (!this.validadorDeCedula(jtxtBusqueda.getText())) {
-            jtxtBusqueda.setText("");
-        }
-         */
+
     }//GEN-LAST:event_jtxtBusquedaFocusLost
 
     private void jtxtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtCedulaFocusLost
@@ -696,16 +667,8 @@ public class crudEstudiante extends javax.swing.JPanel {
     }//GEN-LAST:event_jtxtCedulaFocusLost
 
     private void jbtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnActualizarActionPerformed
-        /*
-        int checkSeleccion;
-        if (jchkRoot.isSelected()) {
-            checkSeleccion = 1;
-        } else {
-            checkSeleccion = 0;
-        }
-         */
-        new crudController().updateUser(jtxtCedula.getText(), jtxtNombre.getText(), jtxtApellido.getText(), jtxtTelefono.getText(), jtxtDireccion.getText());
-        jtblCrud.setModel(new crudController().cargarTabla());
+        new crudController().updateEstudiante(jtxtCedula.getText(), jtxtNombre.getText(), jtxtApellido.getText(), jtxtTelefono.getText(), jtxtDireccion.getText());
+        jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
         this.bloquearTextosyBusqueda();
     }//GEN-LAST:event_jbtnActualizarActionPerformed
 
@@ -728,9 +691,9 @@ public class crudEstudiante extends javax.swing.JPanel {
                     "Direccion: ", jtxtDireccion.getText());
             int opcion = JOptionPane.showConfirmDialog(this, mensaje, "Eliminar Estudiate", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION);
             if (opcion == 0) {
-                new crudController().eliminarUsuario(jtxtCedula.getText());
+                new crudController().eliminarEstudiante(jtxtCedula.getText());
             }
-            jtblCrud.setModel(new crudController().cargarTabla());
+            jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
         }
     }//GEN-LAST:event_jpEliminarMouseClicked
 
@@ -740,9 +703,10 @@ public class crudEstudiante extends javax.swing.JPanel {
         boolean numeros = key >= 48 && key <= 57;
 
         if (!numeros) {
-            if (jtxtTelefono.getText().length() > 10) {
-                evt.consume();
-            }
+            evt.consume();
+        }
+        if (jtxtTelefono.getText().length() >= 10) {
+            evt.consume();
         }
         if (jtxtTelefono.getText().length() >= 10) {
             evt.consume();
@@ -775,7 +739,7 @@ public class crudEstudiante extends javax.swing.JPanel {
     }//GEN-LAST:event_jtxtDireccionKeyTyped
 
     private void jtxtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBusquedaKeyReleased
-        if (new crudController().buscarCedula(jtxtBusqueda.getText()).size() == 0) {
+        if (jtxtBusqueda.getText().length() == 0) {
             //JOptionPane.showMessageDialog(null, "No existe un usuario con la cédula especificada");
             String[] columnas = {
                 "Cedula", "Nombre", "Apellido", "Telefono", "Direccion"
@@ -784,11 +748,11 @@ public class crudEstudiante extends javax.swing.JPanel {
             jtblCrud.setModel(modeloTabla);
             if (jtxtBusqueda.getText().isEmpty()) {
                 jtblCrud.setRowHeight(30);
-                jtblCrud.setModel(new crudController().cargarTabla());
+                jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
                 formatoTitulos();
             }
         } else {
-            jtblCrud.setModel(new crudController().cargarTabla(jtxtBusqueda.getText()));
+            jtblCrud.setModel(new crudController().buscarEstudiante(jtxtBusqueda.getText()));
         }
         jtblCrud.setRowHeight(30);
         formatoTitulos();
@@ -800,14 +764,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         jtxtApellido.setText("");
         jtxtDireccion.setText("");
         jtxtCedula.setText("");
-        jtxtTelefono.setText("");
-        //jchkRoot.setSelected(false);
-        //Jornada
-        ///Mat_man.setText("");
-        //Mat_tar.setText("");
-        //Vesp_man.setText("");
-        //Vesp_tar.setText("");
-
     }
 
     public void bloquearTextosyBusqueda() {
@@ -817,16 +773,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         jtxtDireccion.setEnabled(false);
         jtxtApellido.setEnabled(false);
         jtxtTelefono.setEnabled(false);
-        //Busqueda
-        //jtxtBusqueda.setEnabled(false);
-
-        //jchkRoot.setEnabled(false);
-        //Jornada
-        //Mat_man.setEnabled(false);
-        //Mat_tar.setEnabled(false);
-        //Vesp_man.setEnabled(false);
-        //Vesp_tar.setEnabled(false);
-        //Botones
         jbtnGuardar.setEnabled(false);
         jbtnActualizar.setEnabled(false);
         jbtnCancelar.setEnabled(false);
@@ -839,13 +785,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         jtxtDireccion.setEnabled(false);
         jtxtApellido.setEnabled(false);
         jtxtTelefono.setEnabled(false);
-        //jchkRoot.setEnabled(false);
-        //Jornada
-        //Mat_man.setEnabled(false);
-        //Mat_tar.setEnabled(false);
-        //Vesp_man.setEnabled(false);
-        //Vesp_tar.setEnabled(false);
-
     }
 
     public void desbloquearTextos() {
@@ -855,12 +794,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         jtxtDireccion.setEnabled(true);
         jtxtApellido.setEnabled(true);
         jtxtTelefono.setEnabled(true);
-        //jchkRoot.setEnabled(true);
-        //Jornada
-        //Mat_man.setEnabled(true);
-        //Mat_tar.setEnabled(true);
-        //Vesp_man.setEnabled(true);
-        //Vesp_tar.setEnabled(true);
     }
 
     public void desbloquearTextosActualizar() {
@@ -870,12 +803,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         jtxtDireccion.setEnabled(true);
         jtxtApellido.setEnabled(true);
         jtxtTelefono.setEnabled(true);
-        //jchkRoot.setEnabled(true);
-        //Jornada
-        //Mat_man.setEnabled(true);
-        //Mat_tar.setEnabled(true);
-        //Vesp_man.setEnabled(true);
-        //Vesp_tar.setEnabled(true);
     }
 
     public boolean validadorDeCedula(String cedula) {
@@ -924,58 +851,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         }
         return cedulaCorrecta;
     }
-    /*
-    public boolean validarHorasTrabajo() {
-
-        String AEntrMan = Mat_man.getText();
-        String[] horasManE = AEntrMan.split(":");
-        System.out.println(horasManE[0]);
-        int horamanE = Integer.valueOf(horasManE[0]);
-        if (horasManE[1].equals("00 pm")) {
-            horamanE = horamanE + 12;
-            System.out.println(horamanE);
-
-        }
-
-        String ASalMan = Mat_tar.getText();
-        String[] horasSalMan = ASalMan.split(":");
-        int horamanS = Integer.valueOf(horasSalMan[0]);
-        if (horasSalMan[1].equals("00 pm")) {
-            horamanS = horamanS + 12;
-            System.out.println(horamanS);
-
-        }
-
-        String AEntrVesp = Vesp_man.getText();
-        String[] horasVesE = AEntrVesp.split(":");
-        int horavespE = Integer.valueOf(horasVesE[0]);
-        if (horasVesE[1].equals("00 pm")) {
-            horavespE = horavespE + 12;
-            System.out.println(horavespE);
-
-        }
-
-        String ASalVesp = Vesp_tar.getText();
-        String[] horasVespS = ASalVesp.split(":");
-        int horavespS = Integer.valueOf(horasVespS[0]);
-        if (horasVespS[1].equals("00 pm")) {
-            horavespS = horavespS + 12;
-            System.out.println(horavespS);
-
-        }
-        int horasmanana = horamanS - horamanE;
-        int horastarde = horavespS - horavespE;
-
-        if (horasmanana + horastarde == 8) {
-            new crudController().agregarJornada(jtxtCedula.getText(), Mat_man.getText(), Mat_tar.getText(), Vesp_man.getText(), Vesp_tar.getText());
-
-        } else {
-            JOptionPane.showMessageDialog(null, "La jornada laboral debe ser de 8 horas");
-            return false;
-        }
-        return true;
-    }
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

@@ -62,7 +62,7 @@ public class CRUD extends javax.swing.JFrame {
 
     public void mostrarUsuarios() {
         crudController controlador = new crudController();
-        jtblUsuarios.setModel(controlador.cargarTabla());
+        //jtblUsuarios.setModel(controlador.cargarTabla());
     }
 
     /**
@@ -96,7 +96,6 @@ public class CRUD extends javax.swing.JFrame {
         jtxtUsuario = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jbtnCargar = new javax.swing.JButton();
-        jtxtPassword = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jbtnCargarUsuarios = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -113,6 +112,7 @@ public class CRUD extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
+        jPasswordField1 = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -323,8 +323,8 @@ public class CRUD extends javax.swing.JFrame {
                                     .addComponent(jLabel9))
                                 .addGap(31, 31, 31)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtxtPassword)
-                                    .addComponent(jtxtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
+                                    .addComponent(jtxtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                                    .addComponent(jPasswordField1))
                                 .addGap(17, 17, 17))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(90, 90, 90)
@@ -393,8 +393,8 @@ public class CRUD extends javax.swing.JFrame {
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtxtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel9)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbtnCargar)
                         .addGap(32, 32, 32))
@@ -445,6 +445,7 @@ public class CRUD extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Exito");
         }
         */
+        jPasswordField1.setText("hola");
     }//GEN-LAST:event_jbtnCargarActionPerformed
 
     private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
@@ -538,6 +539,7 @@ public class CRUD extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JButton jbtnAgregar;
@@ -555,7 +557,6 @@ public class CRUD extends javax.swing.JFrame {
     private javax.swing.JTextField jtxtNombre;
     private javax.swing.JTextField jtxtOutMan;
     private javax.swing.JTextField jtxtOutTar;
-    private javax.swing.JTextField jtxtPassword;
     private javax.swing.JButton jtxtSalir;
     private javax.swing.JTextField jtxtUser;
     private javax.swing.JTextField jtxtUsuario;
