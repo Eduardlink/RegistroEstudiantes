@@ -5,6 +5,7 @@
  */
 package paneles;
 
+import paneles.*;
 import controladores.crudController;
 import java.awt.Font;
 import javax.swing.JOptionPane;
@@ -16,12 +17,12 @@ import javax.swing.table.JTableHeader;
  *
  * @author Pc
  */
-public class usuariosInactivos extends javax.swing.JPanel {
+public class estudiantesInactivos extends javax.swing.JPanel {
 
     /**
      * Creates new form usuariosInactivos
      */
-    public usuariosInactivos() {
+    public estudiantesInactivos() {
         initComponents();
         jbtnRestaurar.setEnabled(false);
         jtblInactivos.setRowHeight(30);
@@ -68,7 +69,7 @@ public class usuariosInactivos extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 24)); // NOI18N
-        jLabel2.setText("Usuarios Inactivos");
+        jLabel2.setText("Estudiantes Inactivos");
 
         jtblInactivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -143,7 +144,7 @@ public class usuariosInactivos extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jbtnRestaurar, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 121, Short.MAX_VALUE)))
+                        .addGap(0, 86, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

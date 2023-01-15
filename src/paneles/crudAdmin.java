@@ -20,30 +20,38 @@ import javax.swing.table.JTableHeader;
  *
  * @author Tefy
  */
-public class crudEstudiante extends javax.swing.JPanel {
+public class crudAdmin extends javax.swing.JPanel {
 
     /**
      * Creates new form crud
      */
-    public crudEstudiante() {
+    public crudAdmin() {
         initComponents();
         DefaultTableModel modeloTabla = new DefaultTableModel();
         jtblCrud.setRowHeight(30);
-        jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
+        jtblCrud.setModel(new crudController().cargarTablaUser());
         formatoTitulos();
         this.bloquearTextosyBusqueda();
         jtblCrud.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-                bloquearTextosyBusqueda();
-                limpiarTextos();
                 if (jtblCrud.getSelectedRow() != -1) {
                     Integer fila = jtblCrud.getSelectedRow();
-                    jtxtCedula.setText(jtblCrud.getValueAt(fila, 0).toString());
-                    jtxtNombre.setText(jtblCrud.getValueAt(fila, 1).toString());
-                    jtxtApellido.setText(jtblCrud.getValueAt(fila, 2).toString());
-                    jtxtTelefono.setText(jtblCrud.getValueAt(fila, 3).toString());
-                    jtxtDireccion.setText(jtblCrud.getValueAt(fila, 4).toString());
+                    String[] datos = new crudController().buscarCedula(jtblCrud.getValueAt(fila, 1).toString());
+                    jtxtCedula.setText(datos[0]);
+                    jtxtNombre.setText(datos[1]);
+                    jtxtApellido.setText(datos[2]);
+                    jtxtTelefono.setText(datos[3]);
+                    jtxtDireccion.setText(datos[4]);
+                    jtxtUsuario.setText(datos[5]);
+                    jtxtClave.setText(datos[6]);
+                    if(datos[7].equals("1")){
+                        jchkAdmin.setSelected(true);
+                        jchkSecre.setSelected(false);
+                    }else{
+                        jchkAdmin.setSelected(false);
+                        jchkSecre.setSelected(true);
+                    }
                 }
             }
 
@@ -72,16 +80,28 @@ public class crudEstudiante extends javax.swing.JPanel {
         jlApellido = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jtxtNombre = new javax.swing.JTextField();
         jtxtApellido = new javax.swing.JTextField();
         jtxtCedula = new javax.swing.JTextField();
-        jtxtDireccion = new javax.swing.JTextField();
+        jtxtClave = new javax.swing.JTextField();
+        jchkAdmin = new javax.swing.JCheckBox();
         jbtnGuardar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jbtnActualizar = new javax.swing.JButton();
-        jlNombre1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jtxtTelefono = new javax.swing.JTextField();
+        jtxtDireccion = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jtxtUsuario = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jchkSecre = new javax.swing.JCheckBox();
+        jLabel25 = new javax.swing.JLabel();
         jbtnCancelar = new javax.swing.JButton();
+        jbtnHuella = new javax.swing.JButton();
+        jlblVer = new javax.swing.JLabel();
+        jlblOcultar = new javax.swing.JLabel();
         jpPanelOpciones = new javax.swing.JPanel();
         jpAniadir = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -110,10 +130,13 @@ public class crudEstudiante extends javax.swing.JPanel {
         jlApellido.setText("Apellido");
 
         jLabel3.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
-        jLabel3.setText("Telefono");
+        jLabel3.setText("Cédula");
 
         jLabel4.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
-        jLabel4.setText("Direccion");
+        jLabel4.setText("Contraseña");
+
+        jLabel5.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
+        jLabel5.setText("Tipo usuario");
 
         jtxtNombre.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 16)); // NOI18N
         jtxtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -141,12 +164,11 @@ public class crudEstudiante extends javax.swing.JPanel {
             }
         });
 
-        jtxtDireccion.setFont(new java.awt.Font("Microsoft JhengHei", 0, 16)); // NOI18N
-        jtxtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jtxtDireccionKeyTyped(evt);
-            }
-        });
+        jtxtClave.setFont(new java.awt.Font("Microsoft JhengHei", 0, 16)); // NOI18N
+
+        jchkAdmin.setBackground(new java.awt.Color(204, 204, 204));
+        jchkAdmin.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
+        jchkAdmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jbtnGuardar.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
         jbtnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/floppy-disk.png"))); // NOI18N
@@ -170,24 +192,84 @@ public class crudEstudiante extends javax.swing.JPanel {
             }
         });
 
-        jlNombre1.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
-        jlNombre1.setText("Cedula");
+        jLabel13.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
+        jLabel13.setText("Telefono");
 
-        jtxtTelefono.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 16)); // NOI18N
+        jtxtTelefono.setFont(new java.awt.Font("Microsoft JhengHei", 0, 16)); // NOI18N
+        jtxtTelefono.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtxtTelefonoFocusLost(evt);
+            }
+        });
         jtxtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtxtTelefonoKeyTyped(evt);
             }
         });
 
+        jtxtDireccion.setFont(new java.awt.Font("Microsoft JhengHei", 0, 16)); // NOI18N
+        jtxtDireccion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtxtDireccionFocusLost(evt);
+            }
+        });
+        jtxtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtDireccionKeyTyped(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
+        jLabel14.setText("Direccion");
+
+        jtxtUsuario.setFont(new java.awt.Font("Microsoft JhengHei", 0, 16)); // NOI18N
+        jtxtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtxtUsuarioFocusLost(evt);
+            }
+        });
+        jtxtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtUsuarioKeyTyped(evt);
+            }
+        });
+
+        jLabel23.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
+        jLabel23.setText("Usuario");
+
+        jLabel24.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
+        jLabel24.setText("Administrador/a");
+
+        jchkSecre.setBackground(new java.awt.Color(204, 204, 204));
+        jchkSecre.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
+        jchkSecre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabel25.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
+        jLabel25.setText("Secretario/a");
+
         jbtnCancelar.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
         jbtnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/cancel.png"))); // NOI18N
         jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtnCancelarActionPerformed(evt);
             }
         });
+
+        jbtnHuella.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
+        jbtnHuella.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/huellaIcon.png"))); // NOI18N
+        jbtnHuella.setText("Registrar huella dactilar");
+        jbtnHuella.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jbtnHuella.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnHuellaActionPerformed(evt);
+            }
+        });
+
+        jlblVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/view.png"))); // NOI18N
+
+        jlblOcultar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/hide.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -196,49 +278,66 @@ public class crudEstudiante extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jlApellido)
-                            .addComponent(jlNombre)
-                            .addComponent(jLabel3)
-                            .addComponent(jlNombre1))
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtxtTelefono)
-                            .addComponent(jtxtNombre)
-                            .addComponent(jtxtCedula)
-                            .addComponent(jtxtDireccion)
-                            .addComponent(jtxtApellido)))
+                        .addGap(101, 101, 101)
+                        .addComponent(jLabel6))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jbtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbtnActualizar))
+                            .addComponent(jbtnHuella, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jlApellido)
+                                .addComponent(jlNombre)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel14)
+                                .addComponent(jLabel23)
+                                .addComponent(jLabel4))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(101, 101, 101)
-                                .addComponent(jLabel6))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jbtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jchkAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbtnActualizar))
+                                .addComponent(jLabel24)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlblOcultar))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(105, 105, 105)
-                                .addComponent(jbtnCancelar)))
-                        .addGap(0, 40, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jtxtUsuario, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtCedula, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtApellido, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtNombre, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtClave, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jlblVer))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jchkSecre)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel25)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel6)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(jlNombre1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,21 +347,45 @@ public class crudEstudiante extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlApellido)
                     .addComponent(jtxtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jtxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jtxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73)
+                    .addComponent(jtxtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jtxtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4))
+                    .addComponent(jlblVer))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jchkAdmin)
+                            .addComponent(jLabel24)
+                            .addComponent(jlblOcultar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jchkSecre)
+                            .addComponent(jLabel25))))
+                .addGap(18, 18, 18)
+                .addComponent(jbtnHuella)
+                .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtnGuardar))
+                    .addComponent(jbtnGuardar)
+                    .addComponent(jbtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(198, 198, 198))
+                .addComponent(jbtnCancelar)
+                .addGap(73, 73, 73))
         );
 
         jpPanelOpciones.setBackground(new java.awt.Color(204, 204, 204));
@@ -295,12 +418,12 @@ public class crudEstudiante extends javax.swing.JPanel {
         jpAniadir.setLayout(jpAniadirLayout);
         jpAniadirLayout.setHorizontalGroup(
             jpAniadirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpAniadirLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpAniadirLayout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(jpAniadirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
         );
         jpAniadirLayout.setVerticalGroup(
             jpAniadirLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,8 +431,7 @@ public class crudEstudiante extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap())
+                .addComponent(jLabel2))
         );
 
         jpEliminar.setBackground(new java.awt.Color(204, 204, 204));
@@ -339,23 +461,20 @@ public class crudEstudiante extends javax.swing.JPanel {
         jpEliminar.setLayout(jpEliminarLayout);
         jpEliminarLayout.setHorizontalGroup(
             jpEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jpEliminarLayout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpEliminarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel9)
-                .addGap(31, 31, 31))
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addGroup(jpEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
         jpEliminarLayout.setVerticalGroup(
             jpEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpEliminarLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addContainerGap())
+                .addComponent(jLabel9))
         );
 
         jpActualizar.setBackground(new java.awt.Color(204, 204, 204));
@@ -384,14 +503,14 @@ public class crudEstudiante extends javax.swing.JPanel {
         jpActualizarLayout.setHorizontalGroup(
             jpActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpActualizarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jpActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpActualizarLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel11))
-                    .addGroup(jpActualizarLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel10)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpActualizarLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpActualizarLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addGap(20, 20, 20))))
         );
         jpActualizarLayout.setVerticalGroup(
             jpActualizarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,8 +518,7 @@ public class crudEstudiante extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel11)
-                .addContainerGap())
+                .addComponent(jLabel11))
         );
 
         javax.swing.GroupLayout jpPanelOpcionesLayout = new javax.swing.GroupLayout(jpPanelOpciones);
@@ -408,25 +526,26 @@ public class crudEstudiante extends javax.swing.JPanel {
         jpPanelOpcionesLayout.setHorizontalGroup(
             jpPanelOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPanelOpcionesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jpAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jpActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(190, 190, 190))
+                .addGap(82, 82, 82)
+                .addComponent(jpAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jpEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(234, 234, 234)
+                .addComponent(jpActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(121, 121, 121))
         );
         jpPanelOpcionesLayout.setVerticalGroup(
             jpPanelOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-            .addComponent(jpAniadir, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-            .addComponent(jpActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+            .addComponent(jpAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jpEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jpActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
         jScrollPane1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
 
+        jtblCrud.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 14)); // NOI18N
         jtblCrud.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -438,7 +557,6 @@ public class crudEstudiante extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtblCrud.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(jtblCrud);
 
         jLabel12.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
@@ -451,12 +569,6 @@ public class crudEstudiante extends javax.swing.JPanel {
             }
         });
         jtxtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtxtBusquedaKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtxtBusquedaKeyReleased(evt);
-            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtxtBusquedaKeyTyped(evt);
             }
@@ -475,7 +587,7 @@ public class crudEstudiante extends javax.swing.JPanel {
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,7 +598,7 @@ public class crudEstudiante extends javax.swing.JPanel {
                     .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jpCrudLayout = new javax.swing.GroupLayout(jpCrud);
@@ -494,9 +606,8 @@ public class crudEstudiante extends javax.swing.JPanel {
         jpCrudLayout.setHorizontalGroup(
             jpCrudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpCrudLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpCrudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jpPanelOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -510,9 +621,9 @@ public class crudEstudiante extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpCrudLayout.createSequentialGroup()
                         .addComponent(jpPanelOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
+                        .addGap(37, 37, 37)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(116, 116, 116))
+                .addGap(179, 179, 179))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -548,7 +659,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         this.limpiarTextos();
         this.desbloquearTextos();
         this.jbtnGuardar.setEnabled(true);
-        this.jbtnCancelar.setEnabled(true);
     }//GEN-LAST:event_jpAniadirMouseClicked
 
     private void jpActualizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpActualizarMouseEntered
@@ -562,39 +672,40 @@ public class crudEstudiante extends javax.swing.JPanel {
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
 
         if (!(jtxtCedula.getText().isEmpty() || jtxtNombre.getText().isEmpty()
-                || jtxtApellido.getText().isEmpty() || jtxtTelefono.getText().isEmpty()||jtxtDireccion.getText().isEmpty())) {
-            if (new crudController().exiteUsuario(jtxtCedula.getText(), "estudiantes")) {
-                //if (this.validarHorasTrabajo()) {
-                new crudController().agregarEstudiante(jtxtCedula.getText(),
-                        jtxtNombre.getText(),
-                        jtxtApellido.getText(),
-                        jtxtTelefono.getText(),
-                        jtxtDireccion.getText());
+                || jtxtApellido.getText().isEmpty() || jtxtTelefono.getText().isEmpty()
+                || jtxtDireccion.getText().isEmpty() || jtxtUsuario.getText().isEmpty())) {
 
-                this.limpiarTextos();
-                this.bloquearTextosyBusqueda();
-                //}
+            int checkSeleccion;
+            if (jchkAdmin.isSelected()) {
+                checkSeleccion = 1;
+            } else {
+                checkSeleccion = 0;
+            }
+
+            if (new crudController().exiteUsuario(jtxtCedula.getText(), "usuarios")) {
+/*
+                    new crudController().agregarUsuario(jtxtNombre.getText(),
+                            jtxtApellido.getText(),
+                            jtxtCedula.getText(),
+                            jtxtClave.getText(),
+                            String.valueOf(checkSeleccion));
+*/
+                    this.limpiarTextos();
+                    this.bloquearTextosyBusqueda();
             } else {
                 JOptionPane.showMessageDialog(null, "El usuario ya existe");
             }
 
-            jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
-        }else{
-            JOptionPane.showMessageDialog(this,"Complete todos los campos antes de guardar");
+            //jtblCrud.setModel(new crudController().cargarTabla());
         }
 
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     private void jpActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpActualizarMouseClicked
-        if (jtxtCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Primero seleccione una fila de la tabla");
-        } else {
-            this.desbloquearTextosActualizar();
+        this.desbloquearTextosActualizar();
 
-            this.jbtnGuardar.setEnabled(false);
-            jbtnActualizar.setEnabled(true);
-            jbtnCancelar.setEnabled(true);
-        }
+        this.jbtnGuardar.setEnabled(false);
+        jbtnActualizar.setEnabled(true);
 
     }//GEN-LAST:event_jpActualizarMouseClicked
 
@@ -608,9 +719,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         if (!(minusculas || mayusculas || espacio)) {
             evt.consume();
         }
-        if (jtxtNombre.getText().length() > 40) {
-            evt.consume();
-        }
     }//GEN-LAST:event_jtxtNombreKeyTyped
 
     private void jtxtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtApellidoKeyTyped
@@ -618,12 +726,13 @@ public class crudEstudiante extends javax.swing.JPanel {
 
         boolean mayusculas = key >= 65 && key <= 90;
         boolean minusculas = key >= 97 && key <= 122;
+//        boolean tildes = key <= 160 && key <= 163;
+//        boolean tildes2 = key == 130;
         boolean espacio = key == 32;
+//        boolean acento = key == 239;
+//        boolean enie = key ==164 && key ==165; 
 
         if (!(minusculas || mayusculas || espacio)) {
-            evt.consume();
-        }
-        if (jtxtApellido.getText().length() > 40) {
             evt.consume();
         }
     }//GEN-LAST:event_jtxtApellidoKeyTyped
@@ -636,9 +745,6 @@ public class crudEstudiante extends javax.swing.JPanel {
         if (!numeros) {
             evt.consume();
         }
-        if (jtxtCedula.getText().length() >= 10) {
-            evt.consume();
-        }
     }//GEN-LAST:event_jtxtCedulaKeyTyped
 
     private void jtxtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBusquedaKeyTyped
@@ -649,13 +755,13 @@ public class crudEstudiante extends javax.swing.JPanel {
         if (!numeros) {
             evt.consume();
         }
-        if (jtxtBusqueda.getText().length() >= 10) {
-            evt.consume();
-        }
-
     }//GEN-LAST:event_jtxtBusquedaKeyTyped
 
     private void jtxtBusquedaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtBusquedaFocusLost
+
+        if (!this.validadorDeCedula(jtxtBusqueda.getText())) {
+            jtxtBusqueda.setText("");
+        }
 
     }//GEN-LAST:event_jtxtBusquedaFocusLost
 
@@ -667,8 +773,14 @@ public class crudEstudiante extends javax.swing.JPanel {
     }//GEN-LAST:event_jtxtCedulaFocusLost
 
     private void jbtnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnActualizarActionPerformed
-        new crudController().updateEstudiante(jtxtCedula.getText(), jtxtNombre.getText(), jtxtApellido.getText(), jtxtTelefono.getText(), jtxtDireccion.getText());
-        jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
+        int checkSeleccion;
+        if (jchkAdmin.isSelected()) {
+            checkSeleccion = 1;
+        } else {
+            checkSeleccion = 0;
+        }
+        //new crudController().updateUser(jtxtNombre.getText(), jtxtApellido.getText(), jtxtCedula.getText(), String.valueOf(checkSeleccion));
+        //jtblCrud.setModel(new crudController().cargarTabla());
         this.bloquearTextosyBusqueda();
     }//GEN-LAST:event_jbtnActualizarActionPerformed
 
@@ -677,132 +789,98 @@ public class crudEstudiante extends javax.swing.JPanel {
     }//GEN-LAST:event_jpEliminarMouseExited
 
     private void jpEliminarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpEliminarMouseEntered
-        jpEliminar.setBackground(Color.white);
+
     }//GEN-LAST:event_jpEliminarMouseEntered
 
     private void jpEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpEliminarMouseClicked
-        if (jtxtCedula.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Primero seleccione una fila de la tabla");
-        } else {
-            String mensaje = String.format("%s\n\n%15s%-20s\n%15s%s %s\n%15s%-20s\n%15s%-20s",
-                    "¿Esta seguro de eliminar estudiante?", "Cedula: ", jtxtCedula.getText(),
-                    "Estudiante: ", jtxtNombre.getText(), jtxtApellido.getText(),
-                    "Telefono: ", jtxtTelefono.getText(),
-                    "Direccion: ", jtxtDireccion.getText());
-            int opcion = JOptionPane.showConfirmDialog(this, mensaje, "Eliminar Estudiate", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION);
-            if (opcion == 0) {
-                new crudController().eliminarEstudiante(jtxtCedula.getText());
-            }
-            jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
-        }
+        //new crudController().eliminarUsuario(jtxtCedula.getText());
+
+        //jtblCrud.setModel(new crudController().cargarTabla());
     }//GEN-LAST:event_jpEliminarMouseClicked
 
+    private void jtxtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtTelefonoFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtTelefonoFocusLost
+
     private void jtxtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtTelefonoKeyTyped
-        int key = evt.getKeyChar();
-
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!numeros) {
-            evt.consume();
-        }
-        if (jtxtTelefono.getText().length() >= 10) {
-            evt.consume();
-        }
-        if (jtxtTelefono.getText().length() >= 10) {
-            evt.consume();
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_jtxtTelefonoKeyTyped
 
-    private void jtxtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBusquedaKeyPressed
-
-    }//GEN-LAST:event_jtxtBusquedaKeyPressed
-
-    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
-        bloquearTextosyBusqueda();
-        limpiarTextos();
-    }//GEN-LAST:event_jbtnCancelarActionPerformed
+    private void jtxtDireccionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtDireccionFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtDireccionFocusLost
 
     private void jtxtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtDireccionKeyTyped
-        int key = evt.getKeyChar();
-
-        boolean mayusculas = key >= 65 && key <= 90;
-        boolean minusculas = key >= 97 && key <= 122;
-        boolean espacio = key == 32;
-        boolean numeros = key >= 48 && key <= 57;
-
-        if (!(minusculas || mayusculas || espacio || numeros)) {
-            evt.consume();
-        }
-        if (jtxtNombre.getText().length() > 40) {
-            evt.consume();
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_jtxtDireccionKeyTyped
 
-    private void jtxtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtBusquedaKeyReleased
-        if (jtxtBusqueda.getText().length() == 0) {
-            //JOptionPane.showMessageDialog(null, "No existe un usuario con la cédula especificada");
-            String[] columnas = {
-                "Cedula", "Nombre", "Apellido", "Telefono", "Direccion"
-            };
-            DefaultTableModel modeloTabla = new DefaultTableModel(null, columnas);
-            jtblCrud.setModel(modeloTabla);
-            if (jtxtBusqueda.getText().isEmpty()) {
-                jtblCrud.setRowHeight(30);
-                jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
-                formatoTitulos();
-            }
-        } else {
-            jtblCrud.setModel(new crudController().buscarEstudiante(jtxtBusqueda.getText()));
-        }
-        jtblCrud.setRowHeight(30);
-        formatoTitulos();
-    }//GEN-LAST:event_jtxtBusquedaKeyReleased
+    private void jtxtUsuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtUsuarioFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtUsuarioFocusLost
+
+    private void jtxtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtUsuarioKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtxtUsuarioKeyTyped
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnCancelarActionPerformed
+
+    private void jbtnHuellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnHuellaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbtnHuellaActionPerformed
 
     public void limpiarTextos() {
         //Datos personales
         jtxtNombre.setText("");
         jtxtApellido.setText("");
-        jtxtDireccion.setText("");
+        jtxtClave.setText("");
         jtxtCedula.setText("");
+        jchkAdmin.setSelected(false);
+
     }
 
     public void bloquearTextosyBusqueda() {
         //Datos Personales
         jtxtCedula.setEnabled(false);
         jtxtNombre.setEnabled(false);
-        jtxtDireccion.setEnabled(false);
+        jtxtClave.setEnabled(false);
         jtxtApellido.setEnabled(false);
-        jtxtTelefono.setEnabled(false);
+        jchkAdmin.setEnabled(false);
+        //Busqueda
+        jtxtBusqueda.setEnabled(false);
+        //Botones
+        //jbtnBuscar.setEnabled(false);
         jbtnGuardar.setEnabled(false);
         jbtnActualizar.setEnabled(false);
-        jbtnCancelar.setEnabled(false);
     }
 
     public void bloquearTextos() {
         //Datos
         jtxtCedula.setEnabled(false);
         jtxtNombre.setEnabled(false);
-        jtxtDireccion.setEnabled(false);
+        jtxtClave.setEnabled(false);
         jtxtApellido.setEnabled(false);
-        jtxtTelefono.setEnabled(false);
+        jchkAdmin.setEnabled(false);
+
     }
 
     public void desbloquearTextos() {
         //Datos
         jtxtCedula.setEnabled(true);
         jtxtNombre.setEnabled(true);
-        jtxtDireccion.setEnabled(true);
+        jtxtClave.setEnabled(true);
         jtxtApellido.setEnabled(true);
-        jtxtTelefono.setEnabled(true);
+        jchkAdmin.setEnabled(true);
     }
 
     public void desbloquearTextosActualizar() {
         //Datos
-        jtxtCedula.setEnabled(false);
+        jtxtCedula.setEnabled(true);
         jtxtNombre.setEnabled(true);
-        jtxtDireccion.setEnabled(true);
+        jtxtClave.setEnabled(false);
         jtxtApellido.setEnabled(true);
-        jtxtTelefono.setEnabled(true);
+        jchkAdmin.setEnabled(true);
     }
 
     public boolean validadorDeCedula(String cedula) {
@@ -852,14 +930,22 @@ public class crudEstudiante extends javax.swing.JPanel {
         return cedulaCorrecta;
     }
 
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -869,9 +955,13 @@ public class crudEstudiante extends javax.swing.JPanel {
     private javax.swing.JButton jbtnActualizar;
     private javax.swing.JButton jbtnCancelar;
     private javax.swing.JButton jbtnGuardar;
+    private javax.swing.JButton jbtnHuella;
+    private javax.swing.JCheckBox jchkAdmin;
+    private javax.swing.JCheckBox jchkSecre;
     private javax.swing.JLabel jlApellido;
     private javax.swing.JLabel jlNombre;
-    private javax.swing.JLabel jlNombre1;
+    private javax.swing.JLabel jlblOcultar;
+    private javax.swing.JLabel jlblVer;
     private javax.swing.JPanel jpActualizar;
     private javax.swing.JPanel jpAniadir;
     private javax.swing.JPanel jpCrud;
@@ -881,8 +971,10 @@ public class crudEstudiante extends javax.swing.JPanel {
     private javax.swing.JTextField jtxtApellido;
     private javax.swing.JTextField jtxtBusqueda;
     private javax.swing.JTextField jtxtCedula;
+    private javax.swing.JTextField jtxtClave;
     private javax.swing.JTextField jtxtDireccion;
     private javax.swing.JTextField jtxtNombre;
     private javax.swing.JTextField jtxtTelefono;
+    private javax.swing.JTextField jtxtUsuario;
     // End of variables declaration//GEN-END:variables
 }
