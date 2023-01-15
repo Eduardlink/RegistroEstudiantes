@@ -11,13 +11,14 @@ import javax.swing.JOptionPane;
 import paneles.CambiaPanel;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import menu.MenuItem;
-
 
 /**
  *
@@ -36,39 +37,66 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
     public paginaPrincipal_Secre(String usuario) {
         initComponents();
         this.setLocationRelativeTo(null);
-
         user = usuario;
     }
 
     public paginaPrincipal_Secre() {
         initComponents();
+        new CambiaPanel(jpanPrincipal, new paneles.BienvenidaSecre());
         this.setLocationRelativeTo(null);
+
         execute();
     }
-    
+
     private void execute() {
-        
+
         //---------------------------------------ICONOS---------------------------------
         //Iconos Principal 
-        
-        ImageIcon iconoInicio = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
-                  ImageIcon iconoArchivo = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
-        ImageIcon iconoSalir = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
+        ImageIcon iconoInicio = new ImageIcon(getClass().getResource("/imagenesFrames/homeSecre.png"));
+        ImageIcon iconoArchivo = new ImageIcon(getClass().getResource("/imagenesFrames/archivoSecre.png"));
+        ImageIcon iconoSalir = new ImageIcon(getClass().getResource("/imagenesFrames/cerrar.png"));
 
-//Iconos Archivo
-              ImageIcon iconoCRUDEstudiantes = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
-        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
+        //Iconos Archivo
+        ImageIcon iconoCRUDEstudiantes = new ImageIcon(getClass().getResource("/imagenesFrames/graduado.png"));
+        ImageIcon iconoInactivos = new ImageIcon(getClass().getResource("/imagenesFrames/borrar-usuario.png"));
 
-        
-        
         //--------------------------------------MENU ITEM---------------------------------
-        
+        //Menu Archivo
+        MenuItem menuArchivoCRUD = new MenuItem(iconoCRUDEstudiantes, "Estudiantes", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CambiaPanel(jpanPrincipal, new paneles.crudEstudiante());
+            }
+        });
+        MenuItem menuArchivoInactivos = new MenuItem(iconoInactivos, "Estudiantes Inactivos", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CambiaPanel(jpanPrincipal, new paneles.estudiantesInactivos());
+
+            }
+        });
+
         //Menu Principal
-        MenuItem menuInicio = new MenuItem(iconoInicio, "Inicio",null); 
-        
+        MenuItem menuInicio = new MenuItem(iconoInicio, "Inicio", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CambiaPanel(jpanPrincipal, new paneles.BienvenidaSecre());
+
+            }
+        }
+        );
+        MenuItem menuArchivo = new MenuItem(iconoArchivo, "Archivo", null, menuArchivoCRUD, menuArchivoInactivos);
+        MenuItem menuSalir = new MenuItem(iconoSalir, "Salir", new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        addMenu(menuInicio, menuArchivo, menuSalir);
+
     }
-    
-    
+
     private void addMenu(MenuItem... menu) {
         for (int i = 0; i < menu.length; i++) {
             MenusSecre.add(menu[i]);
@@ -79,11 +107,6 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         }
         MenusSecre.revalidate();
     }
-
-
-
-
-   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,7 +131,6 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         jpHeader = new javax.swing.JPanel();
         RegDocen = new javax.swing.JLabel();
         imgLogoEncab = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jpanPrincipal = new javax.swing.JPanel();
         PanelMenuSecre = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -255,21 +277,9 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         jpHeader.add(imgLogoEncab, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 20, 93, 74));
 
         jPanel2.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1500, 120));
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 260, 80, 40));
 
         jpanPrincipal.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jpanPrincipalLayout = new javax.swing.GroupLayout(jpanPrincipal);
-        jpanPrincipal.setLayout(jpanPrincipalLayout);
-        jpanPrincipalLayout.setHorizontalGroup(
-            jpanPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jpanPrincipalLayout.setVerticalGroup(
-            jpanPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
+        jpanPrincipal.setLayout(new java.awt.BorderLayout());
         jPanel2.add(jpanPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 1250, 590));
 
         jScrollPane1.setBorder(null);
@@ -375,115 +385,21 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(paginaPrincipal_Secre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -502,7 +418,6 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
     private javax.swing.JLabel imgLogoEncab;
     private javax.swing.JLabel imgLogoFisei;
     private javax.swing.JLabel imgLogoUta;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
