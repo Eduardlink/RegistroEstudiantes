@@ -413,7 +413,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="110" y="527" width="119" height="-1"/>
+                  <AbsoluteConstraints x="110" y="540" width="119" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -745,7 +745,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="209" max="-2" attributes="0"/>
-                      <EmptySpace pref="179" max="32767" attributes="0"/>
+                      <EmptySpace pref="143" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

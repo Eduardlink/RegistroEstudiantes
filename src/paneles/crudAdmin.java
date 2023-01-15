@@ -277,7 +277,7 @@ public class crudAdmin extends javax.swing.JPanel {
                 jbtnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 527, 119, -1));
+        jPanel2.add(jbtnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 540, 119, -1));
 
         jbtnHuella.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 13)); // NOI18N
         jbtnHuella.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/huellaIcon.png"))); // NOI18N
@@ -518,7 +518,7 @@ public class crudAdmin extends javax.swing.JPanel {
                     .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jpCrudLayout = new javax.swing.GroupLayout(jpCrud);

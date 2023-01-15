@@ -11,11 +11,12 @@ import javax.swing.JOptionPane;
 import paneles.CambiaPanel;
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import paneles.loguin;
+import menu.MenuItem;
 
 /**
  *
@@ -36,37 +37,43 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
         user = usuario;
-        //new CambiaPanel(jpanPrincipal, new paneles.RegistroAsistencia(usuario));
-        //registroAsistencia();
     }
 
     public paginaPrincipal_Secre() {
         initComponents();
         this.setLocationRelativeTo(null);
-        //new CambiaPanel(jpanPrincipal, new paneles.RegistroAsistencia(this.user));
-        //registroAsistencia();
-    }
-/*
-    public void registroAsistencia() {
-        RegistroAsistencia d = new RegistroAsistencia(user);
-        d.setSize(1250, 590);
-        d.setLocation(0, 0);
-        jpanPrincipal.removeAll();
-        jpanPrincipal.add(d, BorderLayout.CENTER);
-        jpanPrincipal.revalidate();
-        jpanPrincipal.repaint();
+        execute();
     }
 
-    public void informeDiario() {
-        InformeDiario d = new InformeDiario(user);
-        d.setSize(1250, 590);
-        d.setLocation(0, 0);
-        jpanPrincipal.removeAll();
-        jpanPrincipal.add(d, BorderLayout.CENTER);
-        jpanPrincipal.revalidate();
-        jpanPrincipal.repaint();
+    private void execute() {
+
+        //---------------------------------------ICONOS---------------------------------
+        //Iconos Principal 
+        ImageIcon iconoInicio = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
+        ImageIcon iconoArchivo = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
+        ImageIcon iconoSalir = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
+
+        //Iconos Archivo
+        ImageIcon iconoCRUDEstudiantes = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
+        ImageIcon icono = new ImageIcon(getClass().getResource("/imagenesFrames/general.png"));
+
+        //--------------------------------------MENU ITEM---------------------------------
+        //Menu Principal
+        MenuItem menuInicio = new MenuItem(iconoInicio, "Inicio", null);
+
     }
-*/
+
+    private void addMenu(MenuItem... menu) {
+        for (int i = 0; i < menu.length; i++) {
+            MenusSecre.add(menu[i]);
+            ArrayList<MenuItem> subMenu = menu[i].getSubMenu();
+            for (MenuItem m : subMenu) {
+                addMenu(m);
+            }
+        }
+        MenusSecre.revalidate();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,23 +94,21 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         Minim = new javax.swing.JLabel();
         jpCerrar = new javax.swing.JPanel();
         X = new javax.swing.JLabel();
-        jpMenuBar = new javax.swing.JPanel();
-        jbtnHome1 = new javax.swing.JButton();
-        jbtnExit1 = new javax.swing.JButton();
-        jbtnReportesFecha = new javax.swing.JButton();
-        jbtnReportesFecha1 = new javax.swing.JButton();
         jpHeader = new javax.swing.JPanel();
         RegDocen = new javax.swing.JLabel();
         imgLogoEncab = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jpanPrincipal = new javax.swing.JPanel();
+        PanelMenuSecre = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        MenusSecre = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(1250, 850));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1500, 850));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jpFooter.setBackground(new java.awt.Color(217, 217, 217));
@@ -112,21 +117,21 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 24)); // NOI18N
         jLabel2.setText("Universidad Técnica de Ambato - FISEI");
-        jpFooter.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        jpFooter.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(169, 169, 169));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         imgLogoFisei.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/Logo_FISEI.png"))); // NOI18N
-        jPanel5.add(imgLogoFisei, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, 50, 50));
+        jPanel5.add(imgLogoFisei, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 70, 80));
 
         imgLogoUta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         imgLogoUta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/Logo UTA.png"))); // NOI18N
-        jPanel5.add(imgLogoUta, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 50, 50));
+        jPanel5.add(imgLogoUta, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 90, 80));
 
-        jpFooter.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 0, 160, 70));
+        jpFooter.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1290, 0, 210, 110));
 
-        jPanel2.add(jpFooter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 780, 1250, -1));
+        jPanel2.add(jpFooter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 740, 1500, 110));
 
         jpOpBar.setBackground(new java.awt.Color(204, 204, 204));
         jpOpBar.setPreferredSize(new java.awt.Dimension(1250, 30));
@@ -168,7 +173,7 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jpOpBar.add(jpMinim, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 0, 40, 30));
+        jpOpBar.add(jpMinim, new org.netbeans.lib.awtextra.AbsoluteConstraints(1410, 0, 40, 30));
 
         jpCerrar.setBackground(new java.awt.Color(255, 51, 51));
         jpCerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -211,64 +216,9 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
             .addComponent(X, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jpOpBar.add(jpCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 0, 50, 30));
+        jpOpBar.add(jpCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1450, 0, 50, 30));
 
-        jPanel2.add(jpOpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1250, 30));
-
-        jpMenuBar.setBackground(new java.awt.Color(63, 78, 79));
-        jpMenuBar.setToolTipText("");
-        jpMenuBar.setPreferredSize(new java.awt.Dimension(1250, 37));
-        jpMenuBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jbtnHome1.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnHome1.setForeground(new java.awt.Color(63, 78, 79));
-        jbtnHome1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/casa-inteligente.png"))); // NOI18N
-        jbtnHome1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnHome1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnHome1ActionPerformed(evt);
-            }
-        });
-        jpMenuBar.add(jbtnHome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 120, 80));
-
-        jbtnExit1.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnExit1.setForeground(new java.awt.Color(63, 78, 79));
-        jbtnExit1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/salir.png"))); // NOI18N
-        jbtnExit1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnExit1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnExit1ActionPerformed(evt);
-            }
-        });
-        jpMenuBar.add(jbtnExit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, -20, 120, 100));
-
-        jbtnReportesFecha.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnReportesFecha.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
-        jbtnReportesFecha.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnReportesFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/studentDeleted.png"))); // NOI18N
-        jbtnReportesFecha.setText("Estudiantes Inactivos");
-        jbtnReportesFecha.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnReportesFecha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnReportesFechaActionPerformed(evt);
-            }
-        });
-        jpMenuBar.add(jbtnReportesFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, -20, 260, 100));
-
-        jbtnReportesFecha1.setBackground(new java.awt.Color(63, 78, 79));
-        jbtnReportesFecha1.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
-        jbtnReportesFecha1.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnReportesFecha1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/students.png"))); // NOI18N
-        jbtnReportesFecha1.setText("Estudiantes");
-        jbtnReportesFecha1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jbtnReportesFecha1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnReportesFecha1ActionPerformed(evt);
-            }
-        });
-        jpMenuBar.add(jbtnReportesFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, -20, 260, 100));
-
-        jPanel2.add(jpMenuBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 1250, 60));
+        jPanel2.add(jpOpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1500, 30));
 
         jpHeader.setBackground(new java.awt.Color(236, 71, 71));
         jpHeader.setPreferredSize(new java.awt.Dimension(1250, 100));
@@ -286,14 +236,14 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
 
         RegDocen.setFont(new java.awt.Font("Microsoft YaHei UI", 1, 32)); // NOI18N
         RegDocen.setForeground(new java.awt.Color(255, 255, 255));
-        RegDocen.setText("REGISTRO DE DOCENTES");
-        jpHeader.add(RegDocen, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, -1, -1));
+        RegDocen.setText("REGISTRO ESTUDIANTIL");
+        jpHeader.add(RegDocen, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, -1, -1));
 
         imgLogoEncab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imgLogoEncab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/Logo_Encab.png"))); // NOI18N
-        jpHeader.add(imgLogoEncab, new org.netbeans.lib.awtextra.AbsoluteConstraints(827, 13, 93, 74));
+        imgLogoEncab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/registroEstudiantil.png"))); // NOI18N
+        jpHeader.add(imgLogoEncab, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 20, 93, 74));
 
-        jPanel2.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, -1, -1));
+        jPanel2.add(jpHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 1500, 120));
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 260, 80, 40));
 
         jpanPrincipal.setBackground(new java.awt.Color(255, 255, 255));
@@ -302,14 +252,34 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         jpanPrincipal.setLayout(jpanPrincipalLayout);
         jpanPrincipalLayout.setHorizontalGroup(
             jpanPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1250, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jpanPrincipalLayout.setVerticalGroup(
             jpanPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel2.add(jpanPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 1250, 590));
+        jPanel2.add(jpanPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 1250, 590));
+
+        jScrollPane1.setBorder(null);
+
+        MenusSecre.setBackground(new java.awt.Color(63, 78, 79));
+        MenusSecre.setToolTipText("");
+        MenusSecre.setLayout(new javax.swing.BoxLayout(MenusSecre, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(MenusSecre);
+
+        javax.swing.GroupLayout PanelMenuSecreLayout = new javax.swing.GroupLayout(PanelMenuSecre);
+        PanelMenuSecre.setLayout(PanelMenuSecreLayout);
+        PanelMenuSecreLayout.setHorizontalGroup(
+            PanelMenuSecreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
+        );
+        PanelMenuSecreLayout.setVerticalGroup(
+            PanelMenuSecreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(PanelMenuSecre, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 250, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -368,23 +338,6 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_XMouseClicked
 
-    private void jbtnHome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnHome1ActionPerformed
-        //registroAsistencia();
-    }//GEN-LAST:event_jbtnHome1ActionPerformed
-
-    private void jbtnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExit1ActionPerformed
-        new InicioPrincipal().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jbtnExit1ActionPerformed
-
-    private void jbtnReportesFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesFechaActionPerformed
-        //informeDiario();
-    }//GEN-LAST:event_jbtnReportesFechaActionPerformed
-
-    private void jbtnReportesFecha1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnReportesFecha1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jbtnReportesFecha1ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -410,6 +363,83 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(paginaPrincipal_Secre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -453,7 +483,9 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel MenusSecre;
     private javax.swing.JLabel Minim;
+    private javax.swing.JPanel PanelMenuSecre;
     private javax.swing.JLabel RegDocen;
     private javax.swing.JLabel X;
     private javax.swing.JLabel imgLogoEncab;
@@ -463,14 +495,10 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JButton jbtnExit1;
-    private javax.swing.JButton jbtnHome1;
-    private javax.swing.JButton jbtnReportesFecha;
-    private javax.swing.JButton jbtnReportesFecha1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpCerrar;
     private javax.swing.JPanel jpFooter;
     private javax.swing.JPanel jpHeader;
-    private javax.swing.JPanel jpMenuBar;
     private javax.swing.JPanel jpMinim;
     private javax.swing.JPanel jpOpBar;
     private javax.swing.JPanel jpanPrincipal;

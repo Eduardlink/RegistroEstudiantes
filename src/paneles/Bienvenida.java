@@ -33,7 +33,7 @@ public class Bienvenida extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(1250, 590));
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
-        jLabel1.setText("Bienvenid@ al sistema de administración de Registro Docente");
+        jLabel1.setText("Bienvenid@ al sistema de administración de Registro Estudiantil");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/homeAdmin.png"))); // NOI18N
 
