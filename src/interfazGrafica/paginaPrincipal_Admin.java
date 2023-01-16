@@ -129,7 +129,7 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
         MenuItem menuSalir = new MenuItem(iconoSalir, "Salir", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                cerrar();
             }
         });
 
@@ -146,6 +146,12 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
             }
         }
         MenusAdmin.revalidate();
+    }
+
+    private void cerrar() {
+        InicioPrincipal loguin = new InicioPrincipal();
+        loguin.setVisible(true);
+        this.setVisible(false);
     }
 
     /**
@@ -373,7 +379,8 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jpMinimMouseClicked
 
     private void jpCerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpCerrarMouseClicked
-        System.exit(0);
+        //System.exit(0);
+
     }//GEN-LAST:event_jpCerrarMouseClicked
 
     private void jpCerrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpCerrarMouseEntered

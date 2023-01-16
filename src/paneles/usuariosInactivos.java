@@ -5,6 +5,7 @@
  */
 package paneles;
 
+import controladores.InactivosController;
 import controladores.crudController;
 import java.awt.Font;
 import javax.swing.JOptionPane;
@@ -22,18 +23,19 @@ public class usuariosInactivos extends javax.swing.JPanel {
      * Creates new form usuariosInactivos
      */
     public usuariosInactivos() {
+        
         initComponents();
         jbtnRestaurar.setEnabled(false);
         jtblInactivos.setRowHeight(30);
-        jtblInactivos.setModel(new crudController().cargarTablaInactivos());
+        jtblInactivos.setModel(new InactivosController().cargarUsuariosInactivos());
         formatoTitulos();
         jtblInactivos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent lse) {
                 if (jtblInactivos.getSelectedRow() != -1) {
                     Integer fila = jtblInactivos.getSelectedRow();
-                    jLabelNombre.setText(jtblInactivos.getValueAt(fila, 1).toString() + " " + jtblInactivos.getValueAt(fila, 2).toString());
-                    jLabelCedula.setText(jtblInactivos.getValueAt(fila, 3).toString());
+                    jLabelNombre.setText(jtblInactivos.getValueAt(fila, 2).toString() + " " + jtblInactivos.getValueAt(fila, 3).toString());
+                    jLabelCedula.setText(jtblInactivos.getValueAt(fila, 1).toString());
                     jbtnRestaurar.setEnabled(true);
                 }
             }
@@ -120,8 +122,7 @@ public class usuariosInactivos extends javax.swing.JPanel {
 
         jbtnRestaurar.setBackground(new java.awt.Color(0, 153, 51));
         jbtnRestaurar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
-        jbtnRestaurar.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnRestaurar.setText("Restaurar usuario");
+        jbtnRestaurar.setText("Restaurar estudiante");
         jbtnRestaurar.setBorderPainted(false);
         jbtnRestaurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,11 +170,11 @@ public class usuariosInactivos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRestaurarActionPerformed
-        crudController controlador = new crudController();
-        //controlador.actualizarEstado(jLabelCedula.getText());
+        InactivosController controlador = new InactivosController();
+        controlador.restaurar("usuarios",jLabelCedula.getText());
         JOptionPane.showMessageDialog(null, "Usuario activado");
         jtblInactivos.setRowHeight(30);
-        jtblInactivos.setModel(controlador.cargarTablaInactivos());
+       jtblInactivos.setModel(controlador.cargarUsuariosInactivos());
         formatoTitulos();
         jbtnRestaurar.setEnabled(false);
     }//GEN-LAST:event_jbtnRestaurarActionPerformed
