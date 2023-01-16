@@ -459,7 +459,7 @@ public class CRUD extends javax.swing.JFrame {
 
     private void jbtnJornadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnJornadaActionPerformed
         crudController controlador = new crudController();
-        controlador.agregarJornada(jtxtCedula.getText(), jtxtInMan.getText(), jtxtOutMan.getText(), jtxtInTar.getText(), jtxtOutTar.getText());
+        //controlador.agregarJornada(jtxtCedula.getText(), jtxtInMan.getText(), jtxtOutMan.getText(), jtxtInTar.getText(), jtxtOutTar.getText());
     }//GEN-LAST:event_jbtnJornadaActionPerformed
 
     private void jtxtBuscarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtBuscarFechaActionPerformed

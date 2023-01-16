@@ -5,6 +5,7 @@
  */
 package paneles;
 
+import controladores.InactivosController;
 import paneles.*;
 import controladores.crudController;
 import java.awt.Font;
@@ -26,7 +27,7 @@ public class estudiantesInactivos extends javax.swing.JPanel {
         initComponents();
         jbtnRestaurar.setEnabled(false);
         jtblInactivos.setRowHeight(30);
-        jtblInactivos.setModel(new crudController().cargarTablaInactivos());
+        jtblInactivos.setModel(new InactivosController().cargarEstudiantesInactivos());
         formatoTitulos();
         jtblInactivos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -34,7 +35,7 @@ public class estudiantesInactivos extends javax.swing.JPanel {
                 if (jtblInactivos.getSelectedRow() != -1) {
                     Integer fila = jtblInactivos.getSelectedRow();
                     jLabelNombre.setText(jtblInactivos.getValueAt(fila, 1).toString() + " " + jtblInactivos.getValueAt(fila, 2).toString());
-                    jLabelCedula.setText(jtblInactivos.getValueAt(fila, 3).toString());
+                    jLabelCedula.setText(jtblInactivos.getValueAt(fila, 0).toString());
                     jbtnRestaurar.setEnabled(true);
                 }
             }
@@ -170,11 +171,11 @@ public class estudiantesInactivos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbtnRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnRestaurarActionPerformed
-        crudController controlador = new crudController();
-        //controlador.actualizarEstado(jLabelCedula.getText());
-        JOptionPane.showMessageDialog(null, "Usuario activado");
+        InactivosController controlador = new InactivosController();
+        controlador.restaurar("estudiantes",jLabelCedula.getText());
+        JOptionPane.showMessageDialog(null, "Estudiante activado");
         jtblInactivos.setRowHeight(30);
-        jtblInactivos.setModel(controlador.cargarTablaInactivos());
+        jtblInactivos.setModel(controlador.cargarEstudiantesInactivos());
         formatoTitulos();
         jbtnRestaurar.setEnabled(false);
     }//GEN-LAST:event_jbtnRestaurarActionPerformed

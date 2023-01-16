@@ -122,6 +122,40 @@ public class crudController {
         return nombre + apellido + cedula;
     }
 
+    public void agregarUsuario(String[] usuario) {
+        //usuario[]=[cedula],[usuario],[clave],[nombre],[apellido],[telefono],[direccion],[root]
+        try {
+            usuario[2] = new EncriptadorAES().encriptar(usuario[2], "SisTech");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeyException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalBlockSizeException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BadPaddingException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String sql = "UPDATE usuarios SET usuario='" + usuario[1] + "',clave='" + usuario[2] + "',nombre='" + usuario[3] + "',apellido='" + usuario[4]
+                + "',telefono='" + usuario[5] + "',direccion='" + usuario[6] + "',root='" + usuario[7] + "',estado='1' WHERE cedula='" + usuario[0] + "';";
+        manejador.ejecutarConsulta(sql);
+    }
+
+    public boolean existeUsuario(String cedula, String nombre, String apellido) {
+        String userName = crearUsuario(nombre, apellido, cedula);
+        ArrayList<Object> datos = new ArrayList<>();
+        datos = manejador.resultado("SELECT cedula FROM usuarios WHERE estado='1' AND usuario='" + userName + "';");
+        if (datos.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     //read
     public DefaultTableModel cargarTablaUser() {
         try {
@@ -160,6 +194,45 @@ public class crudController {
         }
     }
 
+    //UPDATE USER
+    public void actualizarUsuario(String[] usuario) {
+        //usuario[]=[cedula],[usuario],[clave],[nombre],[apellido],[telefono],[direccion],[root]
+        try {
+            usuario[2] = new EncriptadorAES().encriptar(usuario[2], "SisTech");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InvalidKeyException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchPaddingException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalBlockSizeException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BadPaddingException ex) {
+            Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        String sql = "UPDATE usuarios SET usuario='" + usuario[1] + "',clave='" + usuario[2] + "',nombre='" + usuario[3] + "',apellido='" + usuario[4]
+                + "',telefono='" + usuario[5] + "',direccion='" + usuario[6] + "',root='" + usuario[7] + "',estado='1' WHERE cedula='" + usuario[0] + "';";
+        manejador.ejecutarConsulta(sql);
+    }
+
+    //DELETE USER
+    public void eliminarUsuario(String cedula) {
+        new DataManager().ejecutarConsulta("DELETE FROM usuarios WHERE cedula='" + cedula + "';");
+    }
+
+    public void removerUsuario(String cedula) {
+        String sql = "UPDATE usuarios SET estado='0' WHERE cedula='" + cedula + "';";
+        manejador.ejecutarConsulta(sql);
+    }
+    
+    public void eliminarDatosIncompletos(){
+        String sql = "DELETE FROM usuarios WHERE usuario IS NULL;";
+        manejador.ejecutarConsulta(sql);
+    }
+
     public String[] buscarCedula(String cedula) {
         try {
             ResultSet datos = new DataManager().obtenerDatos("SELECT * FROM usuarios  WHERE cedula = '" + cedula + "' AND estado='1';");
@@ -183,7 +256,43 @@ public class crudController {
         }
     }
 
-    public boolean exiteUsuario(String cedula, String tablaBD) {
+    //BUSCAR USUARIO
+    //buscarEstudiante
+    public DefaultTableModel buscarUsuario(String cedula) {
+        try {
+            String[] columnas = {
+                "Usuario", "Cedula", "Nombre", "Apellido", "Telefono", "Direccion", "Tipo Usuario"
+            };
+            DefaultTableModel modeloTabla = new DefaultTableModel(null, columnas);
+            DataManager manejador = new DataManager();
+            ResultSet datos = manejador.obtenerDatos("SELECT * FROM usuarios WHERE cedula like '" + cedula + "%' AND estado='1';");
+            String[] registro = new String[7];
+            while (datos.next()) {
+                registro[0] = datos.getString("usuario");
+                registro[1] = datos.getString("cedula");
+                registro[2] = datos.getString("nombre");
+                registro[3] = datos.getString("apellido");
+                registro[4] = datos.getString("telefono");
+                registro[5] = datos.getString("direccion");
+                registro[6] = datos.getString("root");
+                if (registro[6].equals("1")) {
+                    registro[6] = "Administrador/a";
+                } else {
+                    registro[6] = "Secretario/a";
+                }
+                if (datos.getString("estado").equals("1")) {
+                    modeloTabla.addRow(registro);
+                }
+            }
+            manejador.cerrar();
+            return modeloTabla;
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    public boolean existeUsuario(String cedula, String tablaBD) {
         ArrayList<Object> datos = new ArrayList<>();
         datos = manejador.resultado("SELECT cedula FROM " + tablaBD + " WHERE estado='1' AND cedula='" + cedula + "'");
         if (datos.size() == 0) {
@@ -193,98 +302,6 @@ public class crudController {
         }
     }
 
-    public void agregarJornada(String cedula, String entrada_man, String salida_man, String entrada_tarde, String salida_tarde) {
-        entrada_man = verificarHora(entrada_man);
-        salida_man = verificarHora(salida_man);
-        entrada_tarde = verificarHora(entrada_tarde);
-        salida_tarde = verificarHora(salida_tarde);
-        String sql = "INSERT INTO jornadas(entrada_man,salida_man,entrada_tarde,salida_tarde,ced_usuario) "
-                + "VALUES('" + entrada_man + "','" + salida_man + "','" + entrada_tarde + "','" + salida_tarde + "','" + cedula + "');";
-        manejador.ejecutarConsulta(sql);
-    }
-
-    public String verificarHora(String hora) {
-        if (hora.length() == 4) {
-            return "0" + hora;
-        } else {
-            return hora;
-        }
-    }
-
-    public DefaultTableModel cargarTabla(String cedula) {
-        try {
-            String[] columnas = {
-                "Cedula", "Nombre", "Apellido", "Telefono", "Direccion"
-            };
-            DefaultTableModel modeloTabla = new DefaultTableModel(null, columnas);
-            DataManager manejador = new DataManager();
-            ResultSet datos = manejador.obtenerDatos("SELECT cedula, nombre, apellido, telefono, direccion, estado FROM estudiantes WHERE cedula='" + cedula + "';");
-            String[] registro = new String[7];
-            ArrayList<Object> lista = new ArrayList<>();
-            while (datos.next()) {
-                registro[0] = datos.getString("cedula");
-                registro[1] = datos.getString("nombre");
-                registro[2] = datos.getString("apellido");
-                registro[3] = datos.getString("telefono");
-                registro[4] = datos.getString("direccion");
-                /*
-                if (registro[4].equals("0")) {
-                    registro[4] = "Docente";
-                } else if (registro[4].equals("1")) {
-                    registro[4] = "Administrador";
-                }
-
-                lista = manejador.resultado("SELECT entrada_man,salida_man,entrada_tarde,salida_tarde FROM jornadas WHERE ced_usuario = '" + cedula + "';");
-                registro[5] = lista.get(0).toString() + " - " + lista.get(1).toString();
-                registro[6] = lista.get(2).toString() + " - " + lista.get(3).toString();
-                 */
-                if (datos.getString("estado").equals("1")) {
-                    modeloTabla.addRow(registro);
-                }
-            }
-            manejador.cerrar();
-            return modeloTabla;
-        } catch (SQLException ex) {
-            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("error: " + ex);
-            return null;
-        }
-    }
-
-    public DefaultTableModel cargarTablaInactivos() {
-        try {
-            String[] columnas = {
-                "Usuario", "Nombre", "Apellido", "Cedula", "Tipo Usuario", "Jornada Matutina", "Jornada Vespertina"
-            };
-            DefaultTableModel modeloTabla = new DefaultTableModel(null, columnas);
-            DataManager manejador = new DataManager();
-            ResultSet datos = manejador.obtenerDatos("SELECT usuario, nombre, apellido, cedula, root, estado FROM usuarios WHERE estado = 0;");
-            String[] registro = new String[7];
-            ArrayList<Object> lista = new ArrayList<>();
-            while (datos.next()) {
-                registro[0] = datos.getString("usuario");
-                registro[1] = datos.getString("nombre");
-                registro[2] = datos.getString("apellido");
-                registro[3] = datos.getString("cedula");
-                registro[4] = datos.getString("root");
-                if (registro[4].equals("0")) {
-                    registro[4] = "Docente";
-                } else if (registro[4].equals("1")) {
-                    registro[4] = "Administrador";
-                }
-
-                lista = manejador.resultado("SELECT entrada_man,salida_man,entrada_tarde,salida_tarde FROM jornadas WHERE ced_usuario = '" + registro[3] + "';");
-                registro[5] = lista.get(0).toString() + " - " + lista.get(1).toString();
-                registro[6] = lista.get(2).toString() + " - " + lista.get(3).toString();
-                modeloTabla.addRow(registro);
-            }
-            manejador.cerrar();
-            return modeloTabla;
-        } catch (SQLException ex) {
-            Logger.getLogger(CRUD.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("error: " + ex);
-            return null;
-        }
-    }
+    
 
 }

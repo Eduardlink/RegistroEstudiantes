@@ -36,8 +36,10 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
      */
     public paginaPrincipal_Secre(String usuario) {
         initComponents();
+        new CambiaPanel(jpanPrincipal, new paneles.BienvenidaSecre());
         this.setLocationRelativeTo(null);
         user = usuario;
+        execute();
     }
 
     public paginaPrincipal_Secre() {

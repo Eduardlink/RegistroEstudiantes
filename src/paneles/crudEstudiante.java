@@ -563,7 +563,7 @@ public class crudEstudiante extends javax.swing.JPanel {
 
         if (!(jtxtCedula.getText().isEmpty() || jtxtNombre.getText().isEmpty()
                 || jtxtApellido.getText().isEmpty() || jtxtTelefono.getText().isEmpty()||jtxtDireccion.getText().isEmpty())) {
-            if (new crudController().exiteUsuario(jtxtCedula.getText(), "estudiantes")) {
+            if (new crudController().existeUsuario(jtxtCedula.getText(), "estudiantes")) {
                 //if (this.validarHorasTrabajo()) {
                 new crudController().agregarEstudiante(jtxtCedula.getText(),
                         jtxtNombre.getText(),
@@ -733,7 +733,7 @@ public class crudEstudiante extends javax.swing.JPanel {
         if (!(minusculas || mayusculas || espacio || numeros)) {
             evt.consume();
         }
-        if (jtxtNombre.getText().length() > 40) {
+        if (jtxtDireccion.getText().length() > 40) {
             evt.consume();
         }
     }//GEN-LAST:event_jtxtDireccionKeyTyped
