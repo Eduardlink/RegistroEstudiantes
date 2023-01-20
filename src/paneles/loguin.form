@@ -195,7 +195,7 @@
           <Font name="Microsoft YaHei" size="40" style="1"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Docente"/>
+        <Property name="text" type="java.lang.String" value="Bienvenido"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
