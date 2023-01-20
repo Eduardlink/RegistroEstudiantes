@@ -294,7 +294,7 @@ public class crudController {
 
     public boolean existeUsuario(String cedula, String tablaBD) {
         ArrayList<Object> datos = new ArrayList<>();
-        datos = manejador.resultado("SELECT cedula FROM " + tablaBD + " WHERE estado='1' AND cedula='" + cedula + "'");
+        datos = manejador.resultado("SELECT cedula FROM " + tablaBD + " WHERE cedula='" + cedula + "'");
         if (datos.size() == 0) {
             return false;
         } else {
@@ -302,6 +302,15 @@ public class crudController {
         }
     }
 
+        public boolean existeUsuarioSinHuella(String cedula, String tablaBD) {
+        ArrayList<Object> datos = new ArrayList<>();
+        datos = manejador.resultado("SELECT cedula FROM " + tablaBD + " WHERE cedula='" + cedula + "' AND usuario IS NULL");
+        if (datos.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     
 
 }

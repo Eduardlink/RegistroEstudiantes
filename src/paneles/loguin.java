@@ -178,6 +178,7 @@ public class loguin extends javax.swing.JPanel {
                 //btnIdentificar.setEnabled(true);
                 String[] pass = identificarHuella();
                 if (pass[2].equals("1")) {
+                    if(pass[3].equals("1")){
                     if (pass[1].equals("1")) {
                         //admin
                         stop();
@@ -190,6 +191,9 @@ public class loguin extends javax.swing.JPanel {
                         paginaPrincipal_Secre u = new paginaPrincipal_Secre(pass[0]);
                         this.loguin.setVisible(false);
                         u.setVisible(true);
+                    }                        
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Usted no puede ingresar al sistema.\nContactese con administracion parasolucionar el problema.");
                     }
                 } else {
                     EnviarTexto("Usuario no encontrado, Intente de nuevo");
@@ -236,13 +240,13 @@ public class loguin extends javax.swing.JPanel {
     public String[] identificarHuella() throws IOException {
         DataManager manejador = new DataManager();
         //[usuario,root,huella]
-        String[] datos = {"", "", "0"};
+        String[] datos = {"", "", "0",""};
         try {
             //Establece los valores para la sentencia SQL
             //Connection c = con.conectar();
 
             //Obtiene todas las huellas de la bd
-            String sql = "SELECT usuario,root,huella FROM usuarios;";
+            String sql = "SELECT usuario,root,huella,estado FROM usuarios;";
             ResultSet rs = manejador.obtenerDatos(sql);
             //PreparedStatement identificarStmt = c.prepareStatement("SELECT huenombre,huehuella FROM somhue");
             //ResultSet rs = identificarStmt.executeQuery();
@@ -253,6 +257,7 @@ public class loguin extends javax.swing.JPanel {
                 byte templateBuffer[] = rs.getBytes("huella");
                 datos[0] = rs.getString("usuario");
                 datos[1] = String.valueOf(rs.getInt("root"));
+                datos[3] = String.valueOf(rs.getInt("estado"));
                 //Crea una nueva plantilla a partir de la guardada en la base de datos
                 DPFPTemplate referenceTemplate = DPFPGlobal.getTemplateFactory().createTemplate(templateBuffer);
                 //Envia la plantilla creada al objeto contendor de Template del componente de huella digital
@@ -544,11 +549,13 @@ public class loguin extends javax.swing.JPanel {
                 paginaPrincipal_Admin adm = new paginaPrincipal_Admin();
                 adm.setVisible(true);
                 this.loguin.setVisible(false);
+                stop();
             } else {
                 //comon user
                 paginaPrincipal_Secre u = new paginaPrincipal_Secre(jtxtuser.getText());
                 this.loguin.setVisible(false);
                 u.setVisible(true);
+                stop();
             }
         }
     }

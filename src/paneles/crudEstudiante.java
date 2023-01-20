@@ -408,7 +408,7 @@ public class crudEstudiante extends javax.swing.JPanel {
         jpPanelOpcionesLayout.setHorizontalGroup(
             jpPanelOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpPanelOpcionesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(232, Short.MAX_VALUE)
                 .addComponent(jpAniadir, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -424,9 +424,11 @@ public class crudEstudiante extends javax.swing.JPanel {
         );
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
 
+        jtblCrud.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 14)); // NOI18N
         jtblCrud.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -438,11 +440,13 @@ public class crudEstudiante extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtblCrud.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(jtblCrud);
+
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 97, 830, 320));
 
         jLabel12.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
         jLabel12.setText("Buscar por cédula: ");
+        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 38, -1, -1));
 
         jtxtBusqueda.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
         jtxtBusqueda.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -461,33 +465,7 @@ public class crudEstudiante extends javax.swing.JPanel {
                 jtxtBusquedaKeyTyped(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
-        );
+        jPanel4.add(jtxtBusqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(225, 35, 290, -1));
 
         javax.swing.GroupLayout jpCrudLayout = new javax.swing.GroupLayout(jpCrud);
         jpCrud.setLayout(jpCrudLayout);
@@ -498,8 +476,10 @@ public class crudEstudiante extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jpCrudLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jpPanelOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpCrudLayout.createSequentialGroup()
+                        .addComponent(jpPanelOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jpCrudLayout.setVerticalGroup(
@@ -511,7 +491,7 @@ public class crudEstudiante extends javax.swing.JPanel {
                     .addGroup(jpCrudLayout.createSequentialGroup()
                         .addComponent(jpPanelOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(116, 116, 116))
         );
 
@@ -562,25 +542,26 @@ public class crudEstudiante extends javax.swing.JPanel {
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnGuardarActionPerformed
 
         if (!(jtxtCedula.getText().isEmpty() || jtxtNombre.getText().isEmpty()
-                || jtxtApellido.getText().isEmpty() || jtxtTelefono.getText().isEmpty()||jtxtDireccion.getText().isEmpty())) {
-            if (new crudController().existeUsuario(jtxtCedula.getText(), "estudiantes")) {
-                //if (this.validarHorasTrabajo()) {
-                new crudController().agregarEstudiante(jtxtCedula.getText(),
-                        jtxtNombre.getText(),
-                        jtxtApellido.getText(),
-                        jtxtTelefono.getText(),
-                        jtxtDireccion.getText());
+                || jtxtApellido.getText().isEmpty() || jtxtTelefono.getText().isEmpty() || jtxtDireccion.getText().isEmpty())) {
+            if (!new crudController().existeUsuario(jtxtCedula.getText(), "usuarios")) {
+                if (!new crudController().existeUsuario(jtxtCedula.getText(), "estudiantes")) {
+                    new crudController().agregarEstudiante(jtxtCedula.getText(),
+                            jtxtNombre.getText(),
+                            jtxtApellido.getText(),
+                            jtxtTelefono.getText(),
+                            jtxtDireccion.getText());
 
-                this.limpiarTextos();
-                this.bloquearTextosyBusqueda();
-                //}
-            } else {
-                JOptionPane.showMessageDialog(null, "El usuario ya existe");
+                    this.limpiarTextos();
+                    this.bloquearTextosyBusqueda();
+                } else {
+                    JOptionPane.showMessageDialog(null, "El usuario ya existe");
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "El estudiante ya se encuentra registrado como secretario/a o administrador/a.");
             }
-
             jtblCrud.setModel(new crudController().cargarTablaEstudiantes());
-        }else{
-            JOptionPane.showMessageDialog(this,"Complete todos los campos antes de guardar");
+        } else {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos antes de guardar");
         }
 
     }//GEN-LAST:event_jbtnGuardarActionPerformed
@@ -760,10 +741,11 @@ public class crudEstudiante extends javax.swing.JPanel {
 
     public void limpiarTextos() {
         //Datos personales
+        jtxtCedula.setText("");
         jtxtNombre.setText("");
         jtxtApellido.setText("");
+        jtxtTelefono.setText("");
         jtxtDireccion.setText("");
-        jtxtCedula.setText("");
     }
 
     public void bloquearTextosyBusqueda() {

@@ -137,6 +137,7 @@ public class paginaPrincipal_Admin extends javax.swing.JFrame {
 
     }
 
+
     private void addMenu(MenuItem... menu) {
         for (int i = 0; i < menu.length; i++) {
             MenusAdmin.add(menu[i]);
