@@ -90,6 +90,12 @@ public class reporteDetalleApellido extends javax.swing.JPanel {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jtxtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtApellidoKeyTyped(evt);
+            }
+        });
+
         jbtnBuscar.setText("BUSCAR");
         jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +141,19 @@ public class reporteDetalleApellido extends javax.swing.JPanel {
     private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
         generarReporte();
     }//GEN-LAST:event_jbtnBuscarActionPerformed
+
+    private void jtxtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtApellidoKeyTyped
+        int key = evt.getKeyChar();
+
+    boolean mayusculas = key >= 65 && key <= 90;
+    boolean minusculas = key >= 97 && key <= 122;
+    boolean espacio = key == 32;
+            
+     if (!(minusculas || mayusculas || espacio) || jtxtApellido.getText().trim().length() == 25)
+    {
+        evt.consume();
+    }
+    }//GEN-LAST:event_jtxtApellidoKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

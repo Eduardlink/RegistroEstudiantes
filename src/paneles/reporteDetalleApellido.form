@@ -68,6 +68,9 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
     </Container>
     <Component class="javax.swing.JTextField" name="jtxtApellido">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtxtApellidoKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbtnBuscar">
       <Properties>

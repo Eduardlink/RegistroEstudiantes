@@ -50,6 +50,12 @@ public class reporteCedula extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(1250, 850));
 
+        jtxtcedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtxtcedulaKeyTyped(evt);
+            }
+        });
+
         jbtnbuscar.setText("Buscar");
         jbtnbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,6 +99,21 @@ public class reporteCedula extends javax.swing.JPanel {
     private void jbtnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnbuscarActionPerformed
         generarReporte();
     }//GEN-LAST:event_jbtnbuscarActionPerformed
+
+    private void jtxtcedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtxtcedulaKeyTyped
+         int key = evt.getKeyChar();
+
+    boolean numeros = key >= 48 && key <= 57;
+        
+    if (!numeros)
+    {
+        evt.consume();
+    }
+
+    if (jtxtcedula.getText().trim().length() == 10) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_jtxtcedulaKeyTyped
 
       public void generarReporte() {
         try {
