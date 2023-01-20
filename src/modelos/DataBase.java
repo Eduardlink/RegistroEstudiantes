@@ -23,7 +23,7 @@ public class DataBase {
     private Connection conexion;
 
     public DataBase() {
-        this.driver = "com.mysql.jdbc.Driver";
+        this.driver = "com.mysql.cj.jdbc.Driver";
         this.url = "jdbc:mysql://localhost/registroestudiantes";
         this.user="root";
         this.pass="";
