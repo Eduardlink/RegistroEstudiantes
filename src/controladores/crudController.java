@@ -26,8 +26,10 @@ import Test.CRUD;
 public class crudController {
 
     private DataManager manejador;
+    private EncriptadorAES encrypt;
 
     public crudController() {
+        encrypt = new EncriptadorAES();
         manejador = new DataManager();
     }
 
@@ -124,7 +126,9 @@ public class crudController {
 
     public void agregarUsuario(String[] usuario) {
         //usuario[]=[cedula],[usuario],[clave],[nombre],[apellido],[telefono],[direccion],[root]
+        /*
         try {
+            System.out.println(usuario[2]);
             usuario[2] = new EncriptadorAES().encriptar(usuario[2], "SisTech");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
@@ -139,7 +143,7 @@ public class crudController {
         } catch (BadPaddingException ex) {
             Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+*/
         String sql = "UPDATE usuarios SET usuario='" + usuario[1] + "',clave='" + usuario[2] + "',nombre='" + usuario[3] + "',apellido='" + usuario[4]
                 + "',telefono='" + usuario[5] + "',direccion='" + usuario[6] + "',root='" + usuario[7] + "',estado='1' WHERE cedula='" + usuario[0] + "';";
         manejador.ejecutarConsulta(sql);
@@ -197,7 +201,8 @@ public class crudController {
     //UPDATE USER
     public void actualizarUsuario(String[] usuario) {
         //usuario[]=[cedula],[usuario],[clave],[nombre],[apellido],[telefono],[direccion],[root]
-        try {
+      /*  try {
+            System.out.println(usuario[2]);
             usuario[2] = new EncriptadorAES().encriptar(usuario[2], "SisTech");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
@@ -212,7 +217,8 @@ public class crudController {
         } catch (BadPaddingException ex) {
             Logger.getLogger(crudController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+*/
+        
         String sql = "UPDATE usuarios SET usuario='" + usuario[1] + "',clave='" + usuario[2] + "',nombre='" + usuario[3] + "',apellido='" + usuario[4]
                 + "',telefono='" + usuario[5] + "',direccion='" + usuario[6] + "',root='" + usuario[7] + "',estado='1' WHERE cedula='" + usuario[0] + "';";
         manejador.ejecutarConsulta(sql);
@@ -245,7 +251,6 @@ public class crudController {
                 usuario[4] = datos.getString("direccion");
                 usuario[5] = datos.getString("usuario");
                 usuario[6] = datos.getString("clave");
-                usuario[6] = new EncriptadorAES().desencriptar(usuario[6], "SisTech");
                 usuario[7] = datos.getString("root");
             }
             return usuario;

@@ -32,13 +32,14 @@ public class LoguinController {
         if (datos.size() < 1) {
             return valido;
         } else {
-            try {
+            
                 if (datos.get(2).toString().equals("1")) {
                     valido[2] = true;
                 } else {
                     valido[2] = false;
                 }
-                pass = new EncriptadorAES().desencriptar(datos.get(1).toString(), "SisTech");
+                //pass = new EncriptadorAES().desencriptar(datos.get(1).toString(), "SisTech");
+                pass = datos.get(1).toString();
                 //pass = new SecretPass().Desencriptar(datos.get(1).toString());
                 if (pass.equals(clave)) {
                     valido[0] = true;
@@ -50,25 +51,7 @@ public class LoguinController {
                     valido[1] = false;
                     return valido;
                 }
-            } catch (UnsupportedEncodingException ex) {
-                Logger.getLogger(LoguinController.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            } catch (NoSuchAlgorithmException ex) {
-                Logger.getLogger(LoguinController.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            } catch (InvalidKeyException ex) {
-                Logger.getLogger(LoguinController.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            } catch (NoSuchPaddingException ex) {
-                Logger.getLogger(LoguinController.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            } catch (IllegalBlockSizeException ex) {
-                Logger.getLogger(LoguinController.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            } catch (BadPaddingException ex) {
-                Logger.getLogger(LoguinController.class.getName()).log(Level.SEVERE, null, ex);
-                return null;
-            }
+           
         }
     }
 

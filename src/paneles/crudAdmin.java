@@ -34,6 +34,9 @@ public class crudAdmin extends javax.swing.JPanel {
 
         DefaultTableModel modeloTabla = new DefaultTableModel();
         jtblCrud.setRowHeight(30);
+        if (!new crudController().existeUsuarioSinHuella(jtxtCedula.getText(), "usuarios")) {
+            new crudController().eliminarDatosIncompletos();
+        }
         jtblCrud.setModel(new crudController().cargarTablaUser());
         formatoTitulos();
         jlblOcultar.setVisible(false);
@@ -629,7 +632,7 @@ public class crudAdmin extends javax.swing.JPanel {
                     String[] datosUser = new String[8];
                     datosUser[0] = jtxtCedula.getText();
                     datosUser[1] = jtxtUsuario.getText();
-                    datosUser[2] = jpassClave.getPassword().toString();
+                    datosUser[2] = new String(jpassClave.getPassword());
                     datosUser[3] = jtxtNombre.getText();
                     datosUser[4] = jtxtApellido.getText();
                     datosUser[5] = jtxtTelefono.getText();
@@ -739,7 +742,7 @@ public class crudAdmin extends javax.swing.JPanel {
             String[] datosUser = new String[8];
             datosUser[0] = jtxtCedula.getText();
             datosUser[1] = jtxtUsuario.getText();
-            datosUser[2] = jpassClave.getPassword().toString();
+            datosUser[2] = new String(jpassClave.getPassword());
             datosUser[3] = jtxtNombre.getText();
             datosUser[4] = jtxtApellido.getText();
             datosUser[5] = jtxtTelefono.getText();
@@ -842,28 +845,65 @@ public class crudAdmin extends javax.swing.JPanel {
         limpiarTextos();
         bloquearTextosyBusqueda();
     }//GEN-LAST:event_jbtnCancelarActionPerformed
-
-    private void jbtnHuellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnHuellaActionPerformed
-        if (formularioCompleto()) {
-            JOptionPane.showMessageDialog(this, "Complete los datos antes de regitrar su huella dactilar");
-        } else {
-            if(!new crudController().existeUsuario(jtxtCedula.getText(), "estudiantes")) {
+    public boolean existeUsuario() {
+        if (!this.actualizarGuardar) {
             if (!new crudController().existeUsuario(jtxtCedula.getText(), "usuarios")) {
-                if (new crudController().existeUsuarioSinHuella(jtxtCedula.getText(), "usuarios")) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    private void jbtnHuellaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnHuellaActionPerformed
+        if (this.actualizarGuardar) {
+            //se presiona Guardar
+            if (formularioCompleto()) {
+                JOptionPane.showMessageDialog(this, "Complete los datos antes de regitrar su huella dactilar");
+            } else {
+                if (!new crudController().existeUsuario(jtxtCedula.getText(), "estudiantes")) {
+                    if (!new crudController().existeUsuario(jtxtCedula.getText(), "usuarios")) {
+                        if (new crudController().existeUsuarioSinHuella(jtxtCedula.getText(), "usuarios")) {
+                            int opcion = JOptionPane.showConfirmDialog(this, "Ya se ha registrado una huella.\n¿Desea registrar su huella de nuevo?", "Alerta", JOptionPane.YES_NO_OPTION);
+                            if (opcion == 0) {
+                                CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText(), true);
+                                capturaHuella.setVisible(true);
+                            }
+                        } else {
+                            CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText(), false);
+                            capturaHuella.setVisible(true);
+                        }
+                    } else {
+                        if (new crudController().existeUsuarioSinHuella(jtxtCedula.getText(), "usuarios")) {
+                            int opcion = JOptionPane.showConfirmDialog(this, "Ya se ha registrado una huella.\n¿Desea registrar su huella de nuevo?", "Alerta", JOptionPane.YES_NO_OPTION);
+                            if (opcion == 0) {
+                                CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText(), true);
+                                capturaHuella.setVisible(true);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "EL usuario con C.I." + jtxtCedula.getText() + " ya esta registrado", "Usuario existente", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "EL usuario con C.I." + jtxtCedula.getText() + " esta registrado como estudiante", "Usuario existente", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        } else {
+            // se presiona Actualizar
+            System.out.println("editar");
+            if (formularioCompleto()) {
+                JOptionPane.showMessageDialog(this, "Complete los datos antes de regitrar su huella dactilar");
+            } else {
+                if (!new crudController().existeUsuario(jtxtCedula.getText(), "estudiantes")) {
                     int opcion = JOptionPane.showConfirmDialog(this, "Ya se ha registrado una huella.\n¿Desea registrar su huella de nuevo?", "Alerta", JOptionPane.YES_NO_OPTION);
                     if (opcion == 0) {
                         CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText(), true);
                         capturaHuella.setVisible(true);
                     }
                 } else {
-                    CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText(), false);
-                    capturaHuella.setVisible(true);
+                    JOptionPane.showMessageDialog(null, "EL usuario con C.I." + jtxtCedula.getText() + " esta registrado como estudiante", "Usuario existente", JOptionPane.INFORMATION_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "EL usuario con C.I." + jtxtCedula.getText()+ " ya existe", "Usuario existente", JOptionPane.INFORMATION_MESSAGE);
-            }
-            }else{
-                JOptionPane.showMessageDialog(null, "EL usuario con C.I." + jtxtCedula.getText()+ " esta registrado como estudiante", "Usuario existente", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_jbtnHuellaActionPerformed
