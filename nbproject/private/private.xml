@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/paginaPrincipal_Admin.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/estudiantesInactivos.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/crudAdmin.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/modelos/DataManager.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/CapturaHuella.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/controladores/crudController.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/Test/CRUD.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/controladores/InactivosController.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/usuariosInactivos.java</file>
-            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/crudEstudiante.java</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/interfazGrafica/CapturaHuella.java</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/interfazGrafica/paginaPrincipal_Admin.java</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/paneles/reporteDetalleApellido.java</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/paneles/ReporteGrafico.java</file>
         </group>
     </open-files>
 </project-private>

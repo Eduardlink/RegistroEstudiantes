@@ -1,48 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-	<parameter name="cedula" class="java.lang.String"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Archivos_Programacion\\NetBeans\\ProyectoV5\\SistemaRegistros\\src\\reportes\\"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="apellido" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
-     usuarios."cedula" AS usuarios_cedula,
-     usuarios."usuario" AS usuarios_usuario,
-     usuarios."clave" AS usuarios_clave,
-     usuarios."nombre" AS usuarios_nombre,
-     usuarios."apellido" AS usuarios_apellido,
-     usuarios."root" AS usuarios_root,
-     usuarios."estado" AS usuarios_estado
+     estudiantes.`cedula` AS estudiantes_cedula,
+     estudiantes.`nombre` AS estudiantes_nombre,
+     estudiantes.`apellido` AS estudiantes_apellido,
+     estudiantes.`telefono` AS estudiantes_telefono,
+     estudiantes.`direccion` AS estudiantes_direccion,
+     estudiantes.`estado` AS estudiantes_estado
 FROM
-     "usuarios" usuarios
-where usuarios."cedula" =$P{cedula}]]>
+     `estudiantes` estudiantes
+WHERE
+     estudiantes.`apellido`=$P{apellido}]]>
 	</queryString>
-	<field name="usuarios_cedula" class="java.lang.Object">
+	<field name="estudiantes_cedula" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="usuarios_usuario" class="java.lang.Object">
+	<field name="estudiantes_nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="usuarios_clave" class="java.lang.Object">
+	<field name="estudiantes_apellido" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="usuarios_nombre" class="java.lang.Object">
+	<field name="estudiantes_telefono" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="usuarios_apellido" class="java.lang.Object">
+	<field name="estudiantes_direccion" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="usuarios_root" class="java.lang.Object">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="usuarios_estado" class="java.lang.Object">
+	<field name="estudiantes_estado" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="58" splitType="Stretch">
+		<band height="52" splitType="Stretch">
 			<line>
 				<reportElement x="0" y="8" width="555" height="1"/>
 			</line>
@@ -50,11 +44,11 @@ where usuarios."cedula" =$P{cedula}]]>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="51" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement x="65" y="13" width="424" height="35" forecolor="#EC4747"/>
+				<reportElement x="65" y="13" width="424" height="35"/>
 				<textElement textAlignment="Center">
 					<font size="26" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Reporte por Cedula]]></text>
+				<text><![CDATA[Classic template]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -62,51 +56,94 @@ where usuarios."cedula" =$P{cedula}]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="80" splitType="Stretch">
+		<band height="18" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="139" height="20"/>
+				<reportElement mode="Opaque" x="0" y="0" width="92" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Cedula]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="139" y="0" width="416" height="20"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{usuarios_cedula}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="0" y="20" width="139" height="20"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[Usuario]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="139" y="20" width="416" height="20"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{usuarios_usuario}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="0" y="40" width="139" height="20"/>
+				<reportElement mode="Opaque" x="92" y="0" width="92" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="139" y="40" width="416" height="20"/>
+			<staticText>
+				<reportElement mode="Opaque" x="184" y="0" width="92" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[""+$F{usuarios_nombre}+" "+$F{usuarios_apellido}]]></textFieldExpression>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="276" y="0" width="92" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="368" y="0" width="92" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Direccion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="460" y="0" width="92" height="18" forecolor="#FFFFFF" backcolor="#999999"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{estudiantes_cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="92" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{estudiantes_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="184" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{estudiantes_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{estudiantes_telefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="368" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{estudiantes_direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="92" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Boolean"><![CDATA[$F{estudiantes_estado}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -157,15 +194,6 @@ where usuarios."cedula" =$P{cedula}]]>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="187">
-			<subreport>
-				<reportElement x="0" y="0" width="555" height="187"/>
-				<subreportParameter name="cedula">
-					<subreportParameterExpression><![CDATA[$P{cedula}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "detalleRegistros.jasper"]]></subreportExpression>
-			</subreport>
-		</band>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>
