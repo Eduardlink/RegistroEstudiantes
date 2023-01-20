@@ -46,10 +46,11 @@ public class reporteDetalleApellido extends javax.swing.JPanel {
             //JasperViewer.viewReport(impresion, false);
             //JasperExportManager.exportReportToPdfFile(impresion, "C://reportes/grafico.pdf");
             JasperExportManager.exportReportToPdfFile(impresion, "src//reportes//mApellidos.pdf");
+            openpdf("src//reportes//mApellidos.pdf");
         } catch (JRException ex) {
             JOptionPane.showMessageDialog(null, "El reporte no esta disponible, comunicate con la administracion");
         }
-        openpdf("src//reportes//mApellidos.pdf");
+        
     }
     
     public void openpdf(String file){
