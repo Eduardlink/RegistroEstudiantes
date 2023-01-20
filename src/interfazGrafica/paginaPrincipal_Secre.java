@@ -91,7 +91,7 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
         MenuItem menuSalir = new MenuItem(iconoSalir, "Salir", new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                cerrar();
             }
         });
 
@@ -108,6 +108,12 @@ public class paginaPrincipal_Secre extends javax.swing.JFrame {
             }
         }
         MenusSecre.revalidate();
+    }
+
+    private void cerrar() {
+        InicioPrincipal loguin = new InicioPrincipal();
+        loguin.setVisible(true);
+        this.setVisible(false);
     }
 
     /**
