@@ -4,7 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/interfazGrafica/InicioPrincipal.java</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/reportes/reporteGeneral.jrxml</file>
             <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/interfazGrafica/paginaPrincipal_Admin.java</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/reportes/detalleApellidos.jrxml</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/paneles/reporteCedula.java</file>
+            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/paneles/reporteDetalleApellido.java</file>
         </group>
     </open-files>
 </project-private>
