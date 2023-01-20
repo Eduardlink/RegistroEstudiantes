@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/reportes/maestroApellidos.jrxml</file>
-            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/interfazGrafica/CapturaHuella.java</file>
-            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/interfazGrafica/paginaPrincipal_Admin.java</file>
-            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/reportes/detalleApellidos.jrxml</file>
-            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/paneles/reporteDetalleApellido.java</file>
-            <file>file:/C:/Users/chris/Documents/NetBeansProjects/RegistroEstudiantes/src/paneles/ReporteGrafico.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/paginaPrincipal_Admin.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/estudiantesInactivos.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/crudAdmin.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/InicioPrincipal.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/paginaPrincipal_Secre.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/interfazGrafica/CapturaHuella.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/loguin.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/controladores/crudController.java</file>
+            <file>file:/C:/Users/eduar/OneDrive/Documentos/NetBeansProjects/ProyectoCV/SistemaRegistros/src/paneles/usuariosInactivos.java</file>
         </group>
     </open-files>
 </project-private>
