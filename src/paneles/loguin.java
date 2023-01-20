@@ -386,7 +386,7 @@ public class loguin extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Microsoft YaHei", 1, 40)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Docente");
+        jLabel4.setText("Bienvenido");
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/Loguin_Docente.png"))); // NOI18N
 
