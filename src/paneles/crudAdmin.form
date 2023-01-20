@@ -240,7 +240,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="45" y="487" width="119" height="-1"/>
+                  <AbsoluteConstraints x="40" y="500" width="119" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -272,7 +272,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="182" y="487" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="170" y="500" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -448,7 +448,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="45" y="437" width="258" height="-1"/>
+                  <AbsoluteConstraints x="40" y="460" width="258" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -761,7 +761,7 @@
                           <Component id="jtxtBusqueda" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="337" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="355" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

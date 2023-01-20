@@ -123,7 +123,7 @@ public class estudiantesInactivos extends javax.swing.JPanel {
         jbtnRestaurar.setBackground(new java.awt.Color(0, 153, 51));
         jbtnRestaurar.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 18)); // NOI18N
         jbtnRestaurar.setForeground(new java.awt.Color(255, 255, 255));
-        jbtnRestaurar.setText("Restaurar usuario");
+        jbtnRestaurar.setText("Restaurar estudiante");
         jbtnRestaurar.setBorderPainted(false);
         jbtnRestaurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

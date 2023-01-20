@@ -24,17 +24,12 @@ import javax.swing.table.JTableHeader;
  */
 public class crudAdmin extends javax.swing.JPanel {
 
+    private boolean actualizarGuardar;
+
     /**
      * Creates new form crud
      */
     public crudAdmin() {
-        new crudController().eliminarDatosIncompletos();
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Imposible modificar el tema visual", "Lookandfeel inválido.",
-                    JOptionPane.ERROR_MESSAGE);
-        }
         initComponents();
 
         DefaultTableModel modeloTabla = new DefaultTableModel();
@@ -210,7 +205,7 @@ public class crudAdmin extends javax.swing.JPanel {
                 jbtnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(jbtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 487, 119, -1));
+        jPanel2.add(jbtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 119, -1));
 
         jLabel6.setFont(new java.awt.Font("Microsoft YaHei", 1, 18)); // NOI18N
         jLabel6.setText("Datos Personales");
@@ -224,7 +219,7 @@ public class crudAdmin extends javax.swing.JPanel {
                 jbtnActualizarActionPerformed(evt);
             }
         });
-        jPanel2.add(jbtnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(182, 487, -1, -1));
+        jPanel2.add(jbtnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 500, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Microsoft JhengHei UI", 0, 18)); // NOI18N
         jLabel13.setText("Telefono");
@@ -311,7 +306,7 @@ public class crudAdmin extends javax.swing.JPanel {
                 jbtnHuellaActionPerformed(evt);
             }
         });
-        jPanel2.add(jbtnHuella, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 437, 258, -1));
+        jPanel2.add(jbtnHuella, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 460, 258, -1));
 
         jlblVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenesFrames/view.png"))); // NOI18N
         jlblVer.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -548,7 +543,7 @@ public class crudAdmin extends javax.swing.JPanel {
                     .addComponent(jLabel12)
                     .addComponent(jtxtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -607,6 +602,7 @@ public class crudAdmin extends javax.swing.JPanel {
 
     private void jpAniadirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpAniadirMouseClicked
 //              jpAniadir.setBackground(Color.white);
+        this.actualizarGuardar = true;
         this.limpiarTextos();
         this.desbloquearTextos();
         this.jbtnGuardar.setEnabled(true);
@@ -656,15 +652,15 @@ public class crudAdmin extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Complete el formulario antes de guardar");
         }
-
     }//GEN-LAST:event_jbtnGuardarActionPerformed
 
     private void jpActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpActualizarMouseClicked
         if (jtxtCedula.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Primero seleccione una fila de la tabla");
         } else {
+            this.actualizarGuardar = false;
             this.desbloquearTextosActualizar();
-            jbtnHuella.setEnabled(false);
+            jbtnHuella.setEnabled(true);
             this.jbtnGuardar.setEnabled(false);
             jbtnActualizar.setEnabled(true);
             jbtnCancelar.setEnabled(true);
@@ -732,6 +728,7 @@ public class crudAdmin extends javax.swing.JPanel {
     private void jtxtCedulaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtxtCedulaFocusLost
         if (jtxtCedula.isEnabled()) {
             if (!this.validadorDeCedula(jtxtCedula.getText())) {
+                JOptionPane.showMessageDialog(null, "La cédula ingresada no es válida");
                 jtxtCedula.setText("");
             }
         }
@@ -783,6 +780,8 @@ public class crudAdmin extends javax.swing.JPanel {
             int opcion = JOptionPane.showConfirmDialog(this, mensaje, "Eliminar Estudiate", JOptionPane.WARNING_MESSAGE, JOptionPane.YES_NO_OPTION);
             if (opcion == 0) {
                 new crudController().removerUsuario(jtxtCedula.getText());
+                limpiarTextos();
+                bloquearTextosyBusqueda();
             }
             jtblCrud.setModel(new crudController().cargarTablaUser());
         }
@@ -834,8 +833,11 @@ public class crudAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_jtxtUsuarioKeyTyped
 
     private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
-        if (!(new crudController().existeUsuario(jtxtCedula.getText(), "usuarios"))) {
-            new crudController().eliminarUsuario(jtxtCedula.getText());
+        if (this.actualizarGuardar) {
+            if ((new crudController().existeUsuarioSinHuella(jtxtCedula.getText(), "usuarios"))) {
+                //new crudController().eliminarUsuario(jtxtCedula.getText());
+                System.out.println("Se borro");
+            }
         }
         limpiarTextos();
         bloquearTextosyBusqueda();
@@ -845,8 +847,24 @@ public class crudAdmin extends javax.swing.JPanel {
         if (formularioCompleto()) {
             JOptionPane.showMessageDialog(this, "Complete los datos antes de regitrar su huella dactilar");
         } else {
-            CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText());
-            capturaHuella.setVisible(true);
+            if(!new crudController().existeUsuario(jtxtCedula.getText(), "estudiantes")) {
+            if (!new crudController().existeUsuario(jtxtCedula.getText(), "usuarios")) {
+                if (new crudController().existeUsuarioSinHuella(jtxtCedula.getText(), "usuarios")) {
+                    int opcion = JOptionPane.showConfirmDialog(this, "Ya se ha registrado una huella.\n¿Desea registrar su huella de nuevo?", "Alerta", JOptionPane.YES_NO_OPTION);
+                    if (opcion == 0) {
+                        CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText(), true);
+                        capturaHuella.setVisible(true);
+                    }
+                } else {
+                    CapturaHuella capturaHuella = new CapturaHuella(jtxtCedula.getText(), false);
+                    capturaHuella.setVisible(true);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "EL usuario con C.I." + jtxtCedula.getText()+ " ya existe", "Usuario existente", JOptionPane.INFORMATION_MESSAGE);
+            }
+            }else{
+                JOptionPane.showMessageDialog(null, "EL usuario con C.I." + jtxtCedula.getText()+ " esta registrado como estudiante", "Usuario existente", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jbtnHuellaActionPerformed
 
@@ -958,7 +976,6 @@ public class crudAdmin extends javax.swing.JPanel {
         jpassClave.setEnabled(false);
         jtxtApellido.setEnabled(false);
         jchkAdmin.setEnabled(false);
-
     }
 
     public void desbloquearTextos() {
@@ -992,9 +1009,7 @@ public class crudAdmin extends javax.swing.JPanel {
 
     public boolean validadorDeCedula(String cedula) {
         boolean cedulaCorrecta = false;
-
         try {
-
             if (cedula.length() == 10) // ConstantesApp.LongitudCedula
             {
                 int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
@@ -1028,11 +1043,6 @@ public class crudAdmin extends javax.swing.JPanel {
         } catch (Exception err) {
             //System.out.println("Una excepcion ocurrio en el proceso de validadcion");
             cedulaCorrecta = false;
-        }
-
-        if (!cedulaCorrecta) {
-            JOptionPane.showMessageDialog(null, "La cédula ingresada no es válida");
-
         }
         return cedulaCorrecta;
     }
