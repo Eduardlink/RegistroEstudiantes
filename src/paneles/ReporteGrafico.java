@@ -5,6 +5,23 @@
  */
 package paneles;
 
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
+import Conexion.conexion;
+import java.io.File;
+import javax.swing.JPanel;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperRunManager;
+import org.icepdf.ri.common.ComponentKeyBinding;
+import org.icepdf.ri.common.SwingController;
+import org.icepdf.ri.common.SwingViewBuilder;
+
 /**
  *
  * @author Tefy
@@ -16,6 +33,8 @@ public class ReporteGrafico extends javax.swing.JPanel {
      */
     public ReporteGrafico() {
         initComponents();
+        generarReporte();
+        openpdf("src//reportes//grafico.pdf");
     }
 
     /**
@@ -27,32 +46,58 @@ public class ReporteGrafico extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
 
         setPreferredSize(new java.awt.Dimension(1250, 850));
-
-        jLabel1.setText("Reporte Grafico");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(558, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(603, 603, 603))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1250, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(222, 222, 222)
-                .addComponent(jLabel1)
-                .addContainerGap(612, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 206, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
+    public void generarReporte() {
+        try {
+            conexion cc = new conexion();
+            Connection cn = cc.conectar();
+            //JasperReport reporte = JasperCompileManager.compileReport("C://reportes/reporteGraficoEstudiantes.jrxml");
+            JasperReport reporte = JasperCompileManager.compileReport("src//reportes//reporteGraficoEstudiantes.jrxml");
+            JasperPrint impresion = JasperFillManager.fillReport(reporte, null, cn);
+            //JasperViewer.viewReport(impresion, false);
+            //JasperExportManager.exportReportToPdfFile(impresion, "C://reportes/grafico.pdf");
+            JasperExportManager.exportReportToPdfFile(impresion, "src//reportes//grafico.pdf");
+        } catch (JRException ex) {
+            JOptionPane.showMessageDialog(null, "El reporte no esta disponible, comunicate con la administracion");
+        }
+    }
+    void openpdf(String file){
+  
+    try {
+           SwingController control=new SwingController();
+            SwingViewBuilder factry=new SwingViewBuilder(control);
+            JPanel veiwerCompntpnl=factry.buildViewerPanel();
+            ComponentKeyBinding.install(control, veiwerCompntpnl);
+            control.getDocumentViewController().setAnnotationCallback(
+                    new org.icepdf.ri.common.MyAnnotationCallback(
+                    control.getDocumentViewController()));
+                   control.openDocument(file);
+        jScrollPane1.setViewportView(veiwerCompntpnl); 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,"ERROR: El pdf no fue cargado");
+        }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
