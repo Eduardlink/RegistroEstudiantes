@@ -94,7 +94,7 @@ public class reporteCedula extends javax.swing.JPanel {
             conexion cc = new conexion();
             Connection cn = cc.conectar();
             //JasperReport reporte = JasperCompileManager.compileReport("C://reportes/reporteGraficoEstudiantes.jrxml");
-            JasperReport reporte = JasperCompileManager.compileReport("src//reportes//Cedula.jrxml");
+            JasperReport reporte = JasperCompileManager.compileReport("src//reportes//maestroCedula.jrxml");
             Map parametros = new HashMap();
             parametros.put("cedula", jtxtcedula.getText());
             JasperPrint impresion = JasperFillManager.fillReport(reporte,parametros , cn);
